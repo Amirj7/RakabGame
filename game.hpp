@@ -7,7 +7,7 @@ class Game : public Player
         Game(){
             initPlayers();
         }
-        
+
         void initPlayers(){
             std::cout << "Welcome to the game!" << std::endl;
             std::cout << "Please enter the number of players : ";
@@ -20,24 +20,23 @@ class Game : public Player
 
             Player players[playerNum];
 
-            while(playerNum){
-                for(int i{} ; i < playerNum ; i++){
-                    std::cout << "please enter player" << i+1 << "' name : ";
-                    std::string name;
-                    std::cin >> name;
-                    players[i].set_Name(name);
+            for(int i{} ; i < playerNum ; i++){
+                std::cout << "please enter player" << i+1 << "' name : ";
+                std::string name;
+                std::cin >> name;
+                players[i].set_Name(name);
 
-                    std::cout << "please enter player" << i+1 << "' age : ";
-                    int age;
-                    std::cin >> age;
-                    players[i].set_Age(age);
+                std::cout << "please enter player" << i+1 << "' age : ";
+                int age;
+                std::cin >> age;
+                players[i].set_Age(age);
 
-                    std::cout << "please enter player" << i+1 << "' color : ";
-                    std::string color;
-                    std::cin >> color;
-                    players[i].set_Color(color);
+                std::cout << "please enter player" << i+1 << "' color : ";
+                std::string color;
+                std::cin >> color;
+                players[i].set_Color(color);
                 }
-            }
+            
         }
     private:
         int playerNum;
