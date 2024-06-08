@@ -14,7 +14,7 @@
 #include "spring.hpp"
 #include "winter.hpp"
 
-class card : public Yellow1 , public Yellow2 , public Yellow3 , public Yellow4 , public Yellow5 , public Yellow6 ,public Yellow10 ,public Matarsag , public parcahm_Dar , public shirdokht , public shirzan , public spring , public winter
+class card : public Yellow1 , public Yellow2 , public Yellow3 , public Yellow4 , public Yellow5 , public Yellow6 ,public Yellow10 ,public Matarsag , public parcahmdar , public shirdokht , public shirzan , public spring , public winter
 {
     public:
         void all_Cards()
@@ -54,6 +54,35 @@ class card : public Yellow1 , public Yellow2 , public Yellow3 , public Yellow4 ,
                 cards.push_back("yellow10");
             }
 
+            Matarsag M1;
+            for(int i{} ; i < M1.get_num_Of_Card() ; i++){
+                cards.push_back("Matarsag");
+            }
+
+            parcahmdar P1;
+            for(int i{} ; i < P1.get_num_Of_Card() ; i++){
+                cards.push_back("parchamdar");
+            }
+
+            shirdokht Sd1;
+            for(int i{} ; i < Sd1.get_num_Of_Card() ; i++){
+                cards.push_back("shirdokht");
+            }
+
+            shirzan Sz1;
+            for(int i{} ; i < Sz1.get_num_Of_Card() ; i++){
+                cards.push_back("shirzan");
+            }
+
+            spring S1;
+            for(int i{} ; i < S1.get_num_Of_Card() ; i++){
+                cards.push_back("spring");
+            }
+
+            winter W1;
+            for(int i{} ; i < W1.get_num_Of_Card() ; i++){
+                cards.push_back("winter");
+            }
 
         }
 
