@@ -8,14 +8,7 @@ using namespace std;
 class Player
 {
 public:
-    Player(int age, string name)
-    {
-        
-        playerAge = age;
-        playerName = name;
-        playerScore = 0; // Initialize player score to 0
-        playerCount++;
-    }
+   
 
     bool check_Player_Num (int num)
     {
