@@ -10,21 +10,23 @@ class Player
 public:
     Player(int age, string name)
     {
-        if (playerCount >= maxPlayers)
-        {
-            throw ("Cannot create more than 6 players.");
-        }
+        
         playerAge = age;
         playerName = name;
         playerScore = 0; // Initialize player score to 0
         playerCount++;
     }
 
-    ~Player()
+    bool check_Player_Num (int num)
     {
-        playerCount--;
+        if (playerCount > maxPlayers || playerCount < minPlayers)
+        {
+            return false;
+        }
+        else {
+            return true;
+        }
     }
-
     void setCardsInHand(vector<int> cards)
     {
         cardsInHand = cards;
@@ -60,6 +62,7 @@ private:
     static int playerCount; 
     static const int maxPlayers = 6; 
     string color;
+    int minPlayers = 3;
 };
 
 int Player::playerCount = 0;
