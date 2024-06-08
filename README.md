@@ -1,2 +1,2 @@
 # RakabGame
- This is our first OOP project :)
+ This is our first OOP graphical project :)
