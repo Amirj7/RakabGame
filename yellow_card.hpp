@@ -6,7 +6,7 @@ using namespace std;
 class card : public Player 
 {
 public:
-    void calculateScore()
+   /*void calculateScore()
     {
         switch (yellowCard)
         {
@@ -35,6 +35,7 @@ public:
                 break;
         }
     }
+    */
 
 private:
     enum YellowCard {
