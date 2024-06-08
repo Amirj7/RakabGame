@@ -1,6 +1,6 @@
 #include <iostream>
 
-class parcahm_Dar
+class parcahmdar
 {
     public:
         int get_num_Of_Card(){
