@@ -1,6 +1,6 @@
 #include<iostream>
 
-class yellow2
+class Yellow2
 {
     public:
         int get_Point()
