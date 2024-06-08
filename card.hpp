@@ -7,8 +7,14 @@
 #include "yellow5.hpp"
 #include "yellow6.hpp"
 #include "yellow10.hpp"
+#include "matarsag.hpp"
+#include "parchamdar.hpp"
+#include "shirdokht.hpp"
+#include "shirzan.hpp"
+#include "spring.hpp"
+#include "winter.hpp"
 
-class card : public Yellow1 , public Yellow2 , public Yellow3 , public Yellow4 , public Yellow5 , public Yellow6 ,public Yellow10
+class card : public Yellow1 , public Yellow2 , public Yellow3 , public Yellow4 , public Yellow5 , public Yellow6 ,public Yellow10 ,public Matarsag , public parcahm_Dar , public shirdokht , public shirzan , public spring , public winter
 {
     public:
         void all_Cards()
