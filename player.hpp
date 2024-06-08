@@ -1,31 +1,52 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <stdexcept>
-
-using namespace std;
 
 class Player
 {
 public:
-   
-
-    bool check_Player_Num (int num)
+    bool check_Player_Num(int num)
     {
-        if (playerCount > maxPlayers || playerCount < minPlayers)
+        if (num > maxPlayers || num < minPlayers)
         {
             return false;
         }
-        else {
+        else
+        {
             return true;
         }
     }
-    void setCardsInHand(vector<int> cards)
+    void set_Name(std ::string name)
+    {
+        playerName = name;
+    }
+    void set_Age(int age)
+    {
+        playerAge = age;
+    }
+    void set_Color(std ::string color)
+    {
+        PlayerColor = color;
+    }
+    int get_Age()
+    {
+        return playerAge;
+    }
+    std::string get_Name()
+    {
+        return playerName;
+    }
+    std::string get_color()
+    {
+        return PlayerColor;
+    }
+
+    void setCardsInHand(std ::vector<int> cards)
     {
         cardsInHand = cards;
     }
 
-    void captureCity(string city)
+    void captureCity(std ::string city)
     {
         capturedCities.push_back(city);
     }
@@ -40,22 +61,17 @@ public:
         playerScore = score;
     }
 
-    static int getPlayerCount()
-    {
-        return playerCount;
-    }
+
 
 private:
     int playerAge;
-    string playerName;
-    vector<vector<int>> cardsPlayed;
-    vector<int> cardsInHand;
-    vector<string> capturedCities;
-    int playerScore; 
-    static int playerCount; 
-    static const int maxPlayers = 6; 
-    string color;
-    int minPlayers = 3;
+    std ::string playerName;
+    std ::vector<std::vector<int>> cardsPlayed;
+    std ::vector<int> cardsInHand;
+    std ::vector<std ::string> capturedCities;
+    int playerScore;
+    const int maxPlayers = 6;
+    std ::string PlayerColor;
+    const int minPlayers = 3;
 };
 
-int Player::playerCount = 0;
