@@ -59,6 +59,7 @@ private:
     int playerScore; 
     static int playerCount; 
     static const int maxPlayers = 6; 
+    string color;
 };
 
 int Player::playerCount = 0;
