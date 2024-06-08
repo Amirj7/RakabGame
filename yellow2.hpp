@@ -9,5 +9,5 @@ class yellow2
     };
 
     private:
-       const int point;
+       const int point = 2;
 };
