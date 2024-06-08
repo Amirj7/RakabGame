@@ -16,47 +16,53 @@ public:
             return true;
         }
     }
+
     void set_Name(std ::string name)
     {
         playerName = name;
     }
+
     void set_Age(int age)
     {
         playerAge = age;
     }
+
     void set_Color(std ::string color)
     {
         PlayerColor = color;
     }
+
     int get_Age()
     {
         return playerAge;
     }
+
     std::string get_Name()
     {
         return playerName;
     }
+    
     std::string get_color()
     {
         return PlayerColor;
     }
 
-    void setCardsInHand(std ::vector<int> cards)
+    void set_Cards_In_Hand(std ::vector<int> cards)
     {
         cardsInHand = cards;
     }
 
-    void captureCity(std ::string city)
+    void capture_City(std ::string city)
     {
         capturedCities.push_back(city);
     }
 
-    int getScore() const
+    int get_Score() const
     {
         return playerScore;
     }
 
-    void setScore(int score)
+    void set_Score(int score)
     {
         playerScore = score;
     }
