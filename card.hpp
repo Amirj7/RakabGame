@@ -2,7 +2,7 @@
 #include "player.hpp"
 #include "deck.hpp"
 
-class Deck : public Player , protected card
+class Card : public Player , protected card
 {
     public:
 

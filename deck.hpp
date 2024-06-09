@@ -14,10 +14,10 @@
 #include "spring.hpp"
 #include "winter.hpp"
 
-class card : public Yellow1 , public Yellow2 , public Yellow3 , public Yellow4 , public Yellow5 , public Yellow6 ,public Yellow10 ,public Matarsag , public parcahmdar , public shirdokht , public shirzan , public spring , public winter
+class Deck : public Yellow1 , public Yellow2 , public Yellow3 , public Yellow4 , public Yellow5 , public Yellow6 ,public Yellow10 ,public Matarsag , public parcahmdar , public shirdokht , public shirzan , public spring , public winter
 {
     public:
-        void all_Cards()
+        void cardsInDeck()
         {
             Yellow1 y1;
             for(int i{} ; i < y1.get_num_Of_Card() ; i++){
