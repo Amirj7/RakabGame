@@ -47,14 +47,18 @@ public:
         return PlayerColor;
     }
 
-    void set_Cards_In_Hand(std ::vector<int> cards)
+    void set_Cards_In_Hand(std::string card)
     {
-        cardsInHand = cards;
+        cardsInHand.push_back(card);
     }
 
     void capture_City(std ::string city)
     {
         capturedCities.push_back(city);
+    }
+
+    int numOfCapturedCities(){
+        return (sizeof(capturedCities)  / sizeof(capturedCities[0]));
     }
 
     int get_Score() const
@@ -73,7 +77,7 @@ private:
     int playerAge;
     std ::string playerName;
     std ::vector<std::vector<int>> cardsPlayed;
-    std ::vector<int> cardsInHand;
+    std ::vector<std::string> cardsInHand;
     std ::vector<std ::string> capturedCities;
     int playerScore;
     const int maxPlayers = 6;

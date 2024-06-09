@@ -13,6 +13,7 @@
 #include "shirzan.hpp"
 #include "spring.hpp"
 #include "winter.hpp"
+#include <algorithm>
 
 class Deck : public Yellow1 , public Yellow2 , public Yellow3 , public Yellow4 , public Yellow5 , public Yellow6 ,public Yellow10 ,public Matarsag , public parcahmdar , public shirdokht , public shirzan , public spring , public winter
 {
@@ -83,9 +84,16 @@ class Deck : public Yellow1 , public Yellow2 , public Yellow3 , public Yellow4 ,
             for(int i{} ; i < W1.get_num_Of_Card() ; i++){
                 cards.push_back("winter");
             }
-
         }
 
+        void shuffleCards(){
+                std::srand(unsigned(time(0)));
+                std::random_shuffle(cards.begin() , cards.end());
+            }
+        
+        std::vector <std::string> getCards() const{
+            return cards;
+        }
     protected:
         std::vector <std::string> cards;
 };
