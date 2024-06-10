@@ -1,5 +1,7 @@
 #include <iostream>
+#include <ctime>
 #include <vector>
+#include <stdlib.h>
 #include "yellow1.hpp"
 #include "yellow2.hpp"
 #include "yellow3.hpp"

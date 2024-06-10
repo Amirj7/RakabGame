@@ -1,8 +1,13 @@
 #include <iostream>
+#include "game.hpp"
 
-class Battel
+class Battel : public Game
 {
     public:
+    Game main_Game;
+    
+
+    
 
     private:
     
