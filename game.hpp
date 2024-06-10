@@ -1,4 +1,5 @@
 #include <iostream>
+#include <algorithm>
 #include "player.hpp"
 #include "deck.hpp"
 
@@ -7,6 +8,8 @@ class Game : public Player , protected Deck
     public:
         Game(){
             initPlayers();
+            Player_Info();
+            Sort_Players_Age();
         }
 
         int getNumOfPlayers(){
@@ -22,15 +25,15 @@ class Game : public Player , protected Deck
                 std::cout << "Invalid number of players. Please enter a number between 3 and 6 : ";
                 std::cin >> playerNum;
             }
+        }
 
+        void Player_Info(){
             std::vector<Player> players(playerNum);
 
             Deck mainDeck;
             mainDeck.shuffleCards();
             auto gameDeck = mainDeck.getCards();
             
-
-
             for(int i{} ; i < playerNum ; i++){
                 std::cout << "please enter player" << i+1 << "' name : ";
                 std::string name;
@@ -41,6 +44,7 @@ class Game : public Player , protected Deck
                 int age;
                 std::cin >> age;
                 players[i].set_Age(age);
+                Players_Age.push_back(age);
 
                 std::cout << "please enter player" << i+1 << "' color : ";
                 std::string color;
@@ -52,9 +56,13 @@ class Game : public Player , protected Deck
                     gameDeck.pop_back();
                     players[i].set_Cards_In_Hand(card);
                 }
-            }
-            
+            }         
+        }
+        void Sort_Players_Age()
+        {
+            sort(Players_Age.begin(),Players_Age.end());
         }
     private:
         int playerNum;
+        std::vector <int> Players_Age;
 };
