@@ -15,10 +15,6 @@ public:
         return neshanJang;
     }
 
-    void startBattle(std::vector<Player> p)
-    {
-        
-    }
 
 private:
     std::string neshanJang;

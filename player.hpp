@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include "yellow1.hpp"
 
 class Player
 {
@@ -47,6 +48,12 @@ class Player
             }
         }
 
+        bool isYellowcard(const std::string& card)
+        {
+            return card.find("yellow") != std::string::npos;
+        }
+
+
         void setYellowCardsOnTable(std::string y)
         {
             yellowCardsOnTable.push_back(y);
@@ -85,11 +92,30 @@ class Player
             winner = x;
         }
 
+        void setPlayerscore(std::vector<std::string> yellowcards)//test
+        {
+            for( int i{} ;i < sizeof(yellowcards) / sizeof(yellowcards[0]) ; i++ )
+            {
+                int score;
+                if(w1.isYellowcard1(yellowcards[i]))
+                {
+                    score += 1;
+                }
+            }
+
+        }
+
         bool getWinner()
         {
             return winner;
         }
+
+        Player operator=(const Player &p)//fix it
+        {
+
+        }
     private:
+        Yellow1 w1;
         std::string name;
         int age;
         std::string color;
@@ -100,3 +126,4 @@ class Player
         int numOfShirdokhtCard;
         bool winner = false;
 };
+
