@@ -1,12 +1,11 @@
-#include<iostream>
+#include <iostream>
 
-class winter
+class Winter
 {
     public:
-        int get_num_Of_Card(){
-            return num_Of_Card;
+        int getNumOfCard(){
+            return numOfCard;
         }
     private:
-        int num_Of_Card = 3;
-    
+        int numOfCard = 3;
 };

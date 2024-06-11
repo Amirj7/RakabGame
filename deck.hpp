@@ -1,101 +1,111 @@
 #include <iostream>
-#include <ctime>
 #include <vector>
-#include <stdlib.h>
-#include "yellow1.hpp"
-#include "yellow2.hpp"
-#include "yellow3.hpp"
-#include "yellow4.hpp"
-#include "yellow5.hpp"
-#include "yellow6.hpp"
-#include "yellow10.hpp"
-#include "matarsag.hpp"
-#include "parchamdar.hpp"
-#include "shirdokht.hpp"
-#include "shirzan.hpp"
-#include "spring.hpp"
-#include "winter.hpp"
 #include <algorithm>
+#include <random>
+#include "Yellow1.hpp"
+#include "Yellow2.hpp"
+#include "Yellow3.hpp"
+#include "Yellow4.hpp"
+#include "Yellow5.hpp"
+#include "Yellow6.hpp"
+#include "Yellow10.hpp"
+#include "Shirdokht.hpp"
+#include "Spring.hpp"
+#include "Winter.hpp"
+#include "Tablzan.hpp"
+#include "Matarsag.hpp"
 
-class Deck : public Yellow1 , public Yellow2 , public Yellow3 , public Yellow4 , public Yellow5 , public Yellow6 ,public Yellow10 ,public Matarsag , public parcahmdar , public shirdokht , public shirzan , public spring , public winter
+class Deck
 {
     public:
-        void cardsInDeck()
+        Deck()
+        {
+            fillDeck();
+            shuffleDeck(cardsInDeck);
+        }
+
+        void fillDeck()
         {
             Yellow1 y1;
-            for(int i{} ; i < y1.get_num_Of_Card() ; i++){
-                cards.push_back("yellow1");
+            for (int i{}; i < y1.getNumOfCard(); i++)
+            {
+                cardsInDeck.push_back("yellow1");
             }
 
             Yellow2 y2;
-            for(int i{} ; i < y2.get_num_Of_Card() ; i++){
-                cards.push_back("yellow2");
+            for (int i{}; i < y2.getNumOfCard(); i++)
+            {
+                cardsInDeck.push_back("yellow2");
             }
 
             Yellow3 y3;
-            for(int i{} ; i < y3.get_num_Of_Card() ; i++){
-                cards.push_back("yellow3");
+            for (int i{}; i < y3.getNumOfCard(); i++)
+            {
+                cardsInDeck.push_back("yellow3");
             }
 
             Yellow4 y4;
-            for(int i{} ; i < y4.get_num_Of_Card() ; i++){
-                cards.push_back("yellow4");
+            for (int i{}; i < y4.getNumOfCard(); i++)
+            {
+                cardsInDeck.push_back("yellow4");
             }
 
             Yellow5 y5;
-            for(int i{} ; i < y5.get_num_Of_Card() ; i++){
-                cards.push_back("yellow5");
+            for (int i{}; i < y5.getNumOfCard(); i++)
+            {
+                cardsInDeck.push_back("yellow5");
             }
 
             Yellow6 y6;
-            for(int i{} ; i < y6.get_num_Of_Card() ; i++){
-                cards.push_back("yellow6");
+            for (int i{}; i < y6.getNumOfCard(); i++)
+            {
+                cardsInDeck.push_back("yellow6");
             }
 
             Yellow10 y10;
-            for(int i{} ; i < y10.get_num_Of_Card() ; i++){
-                cards.push_back("yellow10");
+            for (int i{}; i < y10.getNumOfCard(); i++)
+            {
+                cardsInDeck.push_back("yellow10");
             }
 
-            Matarsag M1;
-            for(int i{} ; i < M1.get_num_Of_Card() ; i++){
-                cards.push_back("Matarsag");
+            Matarsag M;
+            for (int i{}; i < M.getNumOfCard(); i++)
+            {
+                cardsInDeck.push_back("matarsag");
             }
 
-            parcahmdar P1;
-            for(int i{} ; i < P1.get_num_Of_Card() ; i++){
-                cards.push_back("parchamdar");
+            Shirdokht Sd;
+            for (int i{}; i < Sd.getNumOfCard(); i++)
+            {
+                cardsInDeck.push_back("shirdokht");
             }
 
-            shirdokht Sd1;
-            for(int i{} ; i < Sd1.get_num_Of_Card() ; i++){
-                cards.push_back("shirdokht");
+            Spring S;
+            for (int i{}; i < S.getNumOfCard(); i++)
+            {
+                cardsInDeck.push_back("spring");
             }
 
-            shirzan Sz1;
-            for(int i{} ; i < Sz1.get_num_Of_Card() ; i++){
-                cards.push_back("shirzan");
-            }
-
-            spring S1;
-            for(int i{} ; i < S1.get_num_Of_Card() ; i++){
-                cards.push_back("spring");
-            }
-
-            winter W1;
-            for(int i{} ; i < W1.get_num_Of_Card() ; i++){
-                cards.push_back("winter");
+            Winter W;
+            for (int i{}; i < W.getNumOfCard(); i++)
+            {
+                cardsInDeck.push_back("winter");
             }
         }
 
-        void shuffleCards(){
-                std::srand(unsigned(time(0)));
-                std::random_shuffle(cards.begin() , cards.end());
-            }
-        
-        std::vector <std::string> getCards() const{
-            return cards;
+        void shuffleDeck(std::vector <std::string> cards)
+        {
+            std::random_device rd;
+            std::mt19937 g(rd());
+            std::shuffle(cards.begin() , cards.end() , g);
+        }
+
+        std::string getTheLastElementOfCardsInDeck()
+        {
+            std::string temp = cardsInDeck.back();
+            cardsInDeck.pop_back();
+            return temp;
         }
     protected:
-        std::vector <std::string> cards;
+        std::vector<std::string> cardsInDeck;
 };

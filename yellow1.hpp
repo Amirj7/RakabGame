@@ -3,14 +3,14 @@
 class Yellow1
 {
     public:
-        int get_Point(){
+        int getPoint(){
             return point;
         }
 
-        int get_num_Of_Card(){
-            return num_Of_Card;
+        int getNumOfCard(){
+            return numOfCard;
         }
     private:
         const int point = 1;
-        const int num_Of_Card = 10;
+        const int numOfCard = 10;
 };

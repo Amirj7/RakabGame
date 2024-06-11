@@ -1,12 +1,11 @@
-#include<iostream>
+#include <iostream>
 
-class tablzan
+class Tablzan
 {
     public:
-        int get_num_Of_Card(){
-            return num_Of_Card;
+        int getNumOfCard(){
+            return numOfCard;
         }
     private:
-        int num_Of_Card = 6;
-
+        int numOfCard = 6;
 };

@@ -1,87 +1,102 @@
 #include <iostream>
-#include <string>
 #include <vector>
 
 class Player
 {
-public:
-    bool check_Player_Num(int num)
-    {
-        if (num > maxPlayers || num < minPlayers)
+    public:
+        void setName(std::string n)
         {
-            return false;
+            name = n;
         }
-        else
+
+        std::string getName()
         {
-            return true;
+            return name;
         }
-    }
 
-    void set_Name(std ::string name)
-    {
-        playerName = name;
-    }
+        void setAge(int a)
+        {
+            age = a;
+        }
 
-    void set_Age(int age)
-    {
-        playerAge = age;
-    }
+        int getAge()
+        {
+            return age;
+        }
 
-    void set_Color(std ::string color)
-    {
-        PlayerColor = color;
-    }
+        void setColor(std::string c)
+        {
+            color = c;
+        }
 
-    int get_Age()
-    {
-        return playerAge;
-    }
+        std::string getColor()
+        {
+            return color;
+        }
 
-    std::string get_Name()
-    {
-        return playerName;
-    }
+        void setCardsInHand(std::string h)
+        {
+            cardsInHand.push_back(h);
+        }
+
+        void getCardsInHand()
+        {
+            for(int i{} ; i < sizeof(cardsInHand) / sizeof(cardsInHand[0]) ; i++)
+            {
+                std::cout << cardsInHand[i] << " ";
+            }
+        }
+
+        void setYellowCardsOnTable(std::string y)
+        {
+            yellowCardsOnTable.push_back(y);
+        }
+
+        void setPurpleCardsOnTable(std::string p)
+        {
+            purpleCardsOnTable.push_back(p);
+        }
+
+        int numOfPlayerCities()
+        {
+            return (sizeof(capturedCities) / sizeof(capturedCities[0]));
+        }
+
+        void setNumOfShirdokhtCard(std::vector<std::string> Sh)
+        {
+            int counter;
+            for(int i{} ; i < sizeof(Sh) / sizeof(Sh[0]) ; i++)
+            {
+                if(Sh[i] == "shirdokht")
+                {
+                    counter++;
+                }
+            }
+            numOfShirdokhtCard = counter;
+        }
+
+        int getNumOfShirdokhtCard()
+        {
+            return numOfShirdokhtCard;
+        }
     
-    std::string get_color()
-    {
-        return PlayerColor;
-    }
+        void setWinner(bool x)
+        {
+            winner = x;
+        }
 
-    void set_Cards_In_Hand(std::string card)
-    {
-        cardsInHand.push_back(card);
-    }
-
-    void capture_City(std ::string city)
-    {
-        capturedCities.push_back(city);
-    }
-
-    int numOfCapturedCities(){
-        return (sizeof(capturedCities)  / sizeof(capturedCities[0]));
-    }
-
-    int get_Score() const
-    {
-        return playerScore;
-    }
-
-    void set_Score(int score)
-    {
-        playerScore = score;
-    }
-
-
-
-private:
-    int playerAge;
-    std ::string playerName;
-    std ::vector<std::vector<int>> cardsPlayed;
-    std ::vector<std::string> cardsInHand;
-    std ::vector<std ::string> capturedCities;
-    int playerScore;
-    const int maxPlayers = 6;
-    std ::string PlayerColor;
-    const int minPlayers = 3;
+        bool getWinner()
+        {
+            return winner;
+        }
+    private:
+        std::string name;
+        int age;
+        std::string color;
+        std::vector <std::string> cardsInHand;
+        std::vector <std::string> purpleCardsOnTable;
+        std::vector <std::string> yellowCardsOnTable;
+        std::vector <std::string> capturedCities;
+        int numOfShirdokhtCard;
+        bool winner = false;
 };
-
