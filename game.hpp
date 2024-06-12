@@ -83,18 +83,18 @@ public:
         }
     }
 
-    Player findTheSmallestPlayer(std::vector<Player> p) // this function find the smallest person between players for the first turn of the game
+    Player findTheSmallestPlayer(std::vector<Player> &p) // this function find the smallest person between players for the first turn of the game
     {
-        Player temp = p[0];
-        
+        Player *temp = &p[0];
+
         for (int i{}; i < (sizeof(p) / sizeof(p[0])); i++)
         {
-            if (temp.getAge() < p[i].getAge())
+            if (temp->getAge() < p[i].getAge())
             {
-                temp = p[i];
+                temp = &p[i];
             }
         }
-        return temp;
+        return *temp;
     }
 
     void specifyTheRound(int R) // this function specify the round to let players change the neshanejang
@@ -122,11 +122,7 @@ public:
     {
         for (int i{}; i < sizeof(Pl) / sizeof(Pl[0]); i++)
         {
-            if (Pl[i].getNumOfShirdokhtCard()) //fix
-            {
-
-            }
-            else if (Pl[i].getWinner())
+            if (Pl[i].getWinner())
             {
                 std::cout << Pl[i].getName() << " please choose province for battle: ";
                 std::string province;
@@ -174,39 +170,95 @@ public:
     void startBattel(std::vector<Player> x) // this function should start the game
     {
         std::cout << "the battel is starting!" << std::endl;
-        for (int i{}; i < sizeof(x) / sizeof(x[0]); i++)
-        {
-            while (true)
-            {
-                std::string choice;
-                std::cout << players[i].getName() << ", do you want to pass or play a card (pass/play) ? : " << std::endl;
-                std::cin >> choice;
-                if (choice == "pass")
-                {
-                    std::cout << players[i].getName() << " has chosen to pass this turn" << std::endl;
-                    break;
-                }
-                else if (choice == "play")
-                {
-                    std::cout << players[i].getName() << " Please choose a card : " << std::endl;
-                    std::string cards;
-                    std::cin >> cards;
 
-                    if (players[i].isYellowcard(cards))
-                    {
-                        players[i].setYellowCardsOnTable(cards);
-                    }
-                    else
-                    {
-                        players[i].setPurpleCardsOnTable(cards);
-                    }
-                    break;
-                }
-                else
+        std::vector<bool> hasPassed(players.size(), false); // vector to keep passed players
+        while (true)
+        {
+            bool allpassed = true;
+            for (int i{}; i < sizeof(x) / sizeof(x[0]); i++)
+            {
+                if (!hasPassed[i])
                 {
-                    std::cout << "invalid choose please try again! " << std::endl;
+                    allpassed = false;
+                    while (true)
+                    {
+                        std::string choice;
+                        std::cout << players[i].getName() << ", do you want to pass or play a card (pass/play) ? : " << std::endl;
+                        std::cin >> choice;
+                        if (choice == "pass")
+                        {
+                            std::cout << players[i].getName() << " has chosen to pass this turn" << std::endl;
+                            break;
+                        }
+                        else if (choice == "play")
+                        {
+                            std::cout << players[i].getName() << " Please choose a card : " << std::endl;
+                            std::string cards;
+                            std::cin >> cards;
+
+                            if (players[i].isYellowcard(cards))
+                            {
+                                players[i].setYellowCardsOnTable(cards);
+                            }
+                            else
+                            {
+                                players[i].setPurpleCardsOnTable(cards);
+                            }
+                            break;
+                        }
+                        else
+                        {
+                            std::cout << "invalid choose please try again! " << std::endl;
+                        }
+                    }
                 }
             }
+            if (allpassed)
+            {
+                break;
+            }
+        }
+    }
+
+    void calculateScore(std::vector<Player> m) //fix it
+    {
+        for(int i{} ; i < sizeof(m) / sizeof(m[0]) ; i++)
+        {
+            int score = 0;
+            std::vector<std::string> yellowCards = m[i].getYellowCardsOnTable();
+            for(auto &card : yellowCards)
+            {
+                if (card == "Yellow1")
+                {
+                    score += 1;
+                } 
+                    
+                else if (card == "Yellow2")
+                {
+                    score += 2;
+                }
+                else if (card == "Yellow3") 
+                {
+                    score += 3;
+                }
+                else if (card == "Yellow4") 
+                {
+                    score += 4;
+                }
+                else if (card == "Yellow5") 
+                {
+                    score += 5;
+                }
+                else if (card == "Yellow6") 
+                {
+                    score += 6;
+                }
+                else if (card == "Yellow10") 
+                {
+                    score += 10;
+                }
+            }
+            std::cout << m[i].getName() << "'s score: " << score << std::endl;
         }
     }
 

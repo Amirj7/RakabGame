@@ -59,6 +59,11 @@ class Player
             yellowCardsOnTable.push_back(y);
         }
 
+        std::vector<std::string> getYellowCardsOnTable()
+        {
+            return yellowCardsOnTable;
+        }
+
         void setPurpleCardsOnTable(std::string p)
         {
             purpleCardsOnTable.push_back(p);
@@ -109,11 +114,7 @@ class Player
         {
             return winner;
         }
-
-        Player operator=(const Player &p)//fix it
-        {
-
-        }
+    
     private:
         Yellow1 w1;
         std::string name;
