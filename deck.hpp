@@ -1,3 +1,4 @@
+#pragma once
 #include <iostream>
 #include <vector>
 #include <algorithm>
@@ -17,6 +18,7 @@
 
 class Deck
 {
+    
     public:
         Deck()
         {
