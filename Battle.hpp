@@ -8,6 +8,7 @@
 #include "Yellow5.hpp"
 #include "Yellow6.hpp"
 #include "Yellow10.hpp"
+#include "deck.hpp"
 
 class Battle
 {
@@ -37,40 +38,40 @@ public:
 
     void calculateYellowCardsScore(Player p)
     {
-        for(int i{} ; i < p.getSizeOfYellowCardsOnTable() ; i++)
+        for (int i{}; i < p.getSizeOfYellowCardsOnTable(); i++)
         {
             std::string temp = p.getYellowCardsOnTable(i);
-            if(temp == "yellow1")
+            if (temp == "yellow1")
             {
                 Yellow1 y;
                 p.setYellowCardsScoreInYellowCardsScore(y.getPoint());
             }
-            else if(temp == "yellow2")
+            else if (temp == "yellow2")
             {
                 Yellow2 y;
-                p.setYellowCardsScoreInYellowCardsScore(y.getPoint()); 
+                p.setYellowCardsScoreInYellowCardsScore(y.getPoint());
             }
-            else if(temp == "yellow3")
+            else if (temp == "yellow3")
             {
                 Yellow3 y;
                 p.setYellowCardsScoreInYellowCardsScore(y.getPoint());
             }
-            else if(temp == "yellow4")
+            else if (temp == "yellow4")
             {
                 Yellow4 y;
                 p.setYellowCardsScoreInYellowCardsScore(y.getPoint());
             }
-            else if(temp == "yellow5")
+            else if (temp == "yellow5")
             {
                 Yellow5 y;
                 p.setYellowCardsScoreInYellowCardsScore(y.getPoint());
             }
-            else if(temp == "yellow6")
+            else if (temp == "yellow6")
             {
                 Yellow6 y;
                 p.setYellowCardsScoreInYellowCardsScore(y.getPoint());
             }
-            else if(temp == "yellow10")
+            else if (temp == "yellow10")
             {
                 Yellow10 y;
                 p.setYellowCardsScoreInYellowCardsScore(y.getPoint());
@@ -80,13 +81,25 @@ public:
 
     void calculateWinterAndSpringCards(std::vector<Player> p)
     {
-        if(season)//true=spring
+        if (season) // true=spring
         {
-            //be bozorg tarin carde bazi 3 ta ezaf kone
+            for (auto& player : p)
+            {
+                int maxCardValue = -1;
+                for (int i = 0; i < player.getSizeOfYellowCardsOnTable(); i++)
+                {
+                    int cardValue = player.getCardValueInHand(i);
+                    if (cardValue > maxCardValue)
+                    {
+                        maxCardValue = cardValue + 3;
+                    }
+                }
+                player.springScore(maxCardValue);
+            }
         }
         else
         {
-            for(int i{} ; i < sizeof(p) / sizeof(p[0]) ; i++)
+            for (int i{}; i < sizeof(p) / sizeof(p[0]); i++)
             {
                 p[i].winterOnYellowCardsScore();
             }
@@ -95,95 +108,176 @@ public:
 
     void calculatePurpleCardsScore(Player p)
     {
-        for(int i{} ; i < p.getSizeOfPurpleCardsOnTable() ; i++)
+        for (int i{}; i < p.getSizeOfPurpleCardsOnTable(); i++)
         {
             std::string temp = p.getPurpleCardsOnTable(i);
-            if(temp == "tablzan")
+            if (temp == "tablzan")
             {
-                //**
+                p.setPurpleCardsScoreInPuepleCardsScore(p.getYellowCardsScore()*2);    
             }
-            else if(temp == "shirdokht")
+            else if (temp == "shirdokht")
             {
                 p.setPurpleCardsScoreInPuepleCardsScore(10);
             }
         }
     }
 
-    void startBattle(std::vector<Player> p)
+   void startBattle(std::vector<Player>& players, Deck& D)
+{
+    while (numOfPlayersThatPass(players) != players.size()) 
     {
-        while (numOfPlayersThatPass(p) != (sizeof(p) / sizeof(p[0])))
+        for (auto& player : players)
         {
-            for (int i{} ; i < sizeof(p) / sizeof(p[0]) ; i++)
+            if (!player.getPass()) 
             {
-                if (p[i].getPass() == false)
-                {
-                    std::string choice;
-                    std::cout << p[i].getName() << " please choose a card to play or pass: ";
-                    p[i].getCardsInHand();
-                    std::cin >> choice;
+                std::string choice;
+                std::cout << "-------------------------------------------------" << std::endl;
+                std::cout << player.getName() << "'s turn:" << std::endl;
 
-                    if (choice == "pass")
+                player.setCardsInHand(D.getTheLastElementOfCardsInDeck());
+
+                //player.showPlayerCards({player});
+                player.showPlayerCards();
+
+                std::cout << "Choose a card to play or pass ('pass' to skip): ";
+                std::cin >> choice;
+
+                if (choice == "pass")
+                {
+                    std::cout << "player passed this time" << std::endl ;
+                    player.setPass(true);
+                }
+                else
+                {
+                    if (player.checkThatPlayerHaveTheCardOrNot(choice))
                     {
-                        p[i].setPass(true);
-                    }
-                    else
-                    {
-                        if (p[i].checkThatPlayerHaveTheCardOrNot(choice))
+                        if (player.isYellowCard(choice))
                         {
-                            if (p[i].isYellowCard(choice))
-                            {
-                                p[i].setYellowCardsOnTable(choice);
-                            }
-                            else
-                            {
-                                if(choice == "spring")
-                                {
-                                    season = true;
-                                }
-                                else if(choice == "winter")
-                                {
-                                    season = false;
-                                }
-                                else if(choice == "matarsag")
-                                {
-                                    std::string cardThatPlayerWantToPeakUp;
-                                    std::cout << "please enter the card you want to peak up: ";
-                                    std::cin >> cardThatPlayerWantToPeakUp;
-                                    p[i].setCardsInHand(cardThatPlayerWantToPeakUp);
-                                    p[i].popBackCardsOnTable(cardThatPlayerWantToPeakUp);
-                                }
-                                else
-                                {
-                                    p[i].setPurpleCardsOnTable(choice);
-                                }
-                            }
+                            player.setYellowCardsOnTable(choice);
                         }
                         else
                         {
-                            std::cout << "you don't have this  card!!" << std::endl
-                                      << "please choose a card that exist in your hand: ";
-                            std::cin >> choice;
-                            if (p[i].isYellowCard(choice))
+                            if (choice == "spring")
                             {
-                                p[i].setYellowCardsOnTable(choice);
+                                season = true;
+                            }
+                            else if (choice == "winter")
+                            {
+                                season = false;
+                            }
+                            else if (choice == "matarsag")
+                            {
+                                std::string cardThatPlayerWantToPickUp;
+                                std::cout << "Please enter the card you want to pick up: ";
+                                std::cin >> cardThatPlayerWantToPickUp;
+                                player.setCardsInHand(cardThatPlayerWantToPickUp);
+                                player.popBackCardsOnTable(cardThatPlayerWantToPickUp);
                             }
                             else
                             {
-                                p[i].setPurpleCardsOnTable(choice);
+                                player.setPurpleCardsOnTable(choice);
                             }
                         }
                     }
-                }
-
-                if(i == ((sizeof(p) / sizeof(p[0])) - 1))
-                {
-                    i = 0;
+                    else
+                    {
+                        std::cout << "You don't have this card!!" << std::endl
+                                  << "Please choose a card that exists in your hand: ";
+                        std::cin >> choice;
+                        if (player.isYellowCard(choice))
+                        {
+                            player.setYellowCardsOnTable(choice);
+                        }
+                        else
+                        {
+                            player.setPurpleCardsOnTable(choice);
+                        }
+                    }
                 }
             }
         }
     }
+    std::cout << "Battle ended.\n";
+}
+
+
+    // void startBattle(std::vector<Player> p)
+    // {
+    //     while (numOfPlayersThatPass(p) != (sizeof(p) / sizeof(p[0])))
+    //     {
+    //         for (int i{}; i < sizeof(p) / sizeof(p[0]); i++)
+    //         {
+    //             if (p[i].getPass() == false) // fix it
+    //             {
+    //                 std::string choice;
+    //                 std::cout << p[i].getName() << " please choose a card to play or pass: ";
+    //                 p[i].getCardsInHand();
+    //                 std::cin >> choice;
+
+    //                 if (choice == "pass")
+    //                 {
+    //                     p[i].setPass(true);
+    //                 }
+    //                 else
+    //                 {
+    //                     if (p[i].checkThatPlayerHaveTheCardOrNot(choice))
+    //                     {
+    //                         if (p[i].isYellowCard(choice))
+    //                         {
+    //                             p[i].setYellowCardsOnTable(choice);
+    //                         }
+    //                         else
+    //                         {
+    //                             if (choice == "spring")
+    //                             {
+    //                                 season = true;
+    //                             }
+    //                             else if (choice == "winter")
+    //                             {
+    //                                 season = false;
+    //                             }
+    //                             else if (choice == "matarsag")
+    //                             {
+    //                                 std::string cardThatPlayerWantToPeakUp;
+    //                                 std::cout << "please enter the card you want to peak up: "; // show hards on table
+    //                                 std::cin >> cardThatPlayerWantToPeakUp;
+    //                                 p[i].setCardsInHand(cardThatPlayerWantToPeakUp);
+    //                                 p[i].popBackCardsOnTable(cardThatPlayerWantToPeakUp);
+    //                             }
+    //                             else
+    //                             {
+    //                                 p[i].setPurpleCardsOnTable(choice);
+    //                             }
+    //                         }
+    //                     }
+    //                     else
+    //                     {
+    //                         std::cout << "you don't have this  card!!" << std::endl
+    //                                   << "please choose a card that exist in your hand: ";
+    //                         std::cin >> choice;
+    //                         if (p[i].isYellowCard(choice))
+    //                         {
+    //                             p[i].setYellowCardsOnTable(choice);
+    //                         }
+    //                         else
+    //                         {
+    //                             p[i].setPurpleCardsOnTable(choice);
+    //                         }
+    //                     }
+    //                 }
+    //             }
+
+    //             if (i == ((sizeof(p) / sizeof(p[0])) - 1))
+    //             {
+    //                 i = 0;
+    //             }
+    //         }
+    //     }
+    //     std::cout << "this";
+    // }
 
 private:
+    Deck D;
     std::string neshanJang;
-    bool season;//spring=true -- winter=false
+    bool season; // spring=true -- winter=false
 };
