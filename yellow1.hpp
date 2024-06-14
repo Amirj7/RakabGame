@@ -1,21 +1,21 @@
+#pragma once
 #include <iostream>
+#include "cart.hpp"
 
-class Yellow1
+class Yellow1 : public Card
 {
-    public:
-        int getPoint(){
-            return point;
-        }
+public:
+    int getPoint() const override
+    {
+        return 1;
+    }
+    int getNumOfCard() const override
+    {
+        return 10;
+    }
 
-        int getNumOfCard(){
-            return numOfCard;
-        }
-
-        bool isYellowcard1(const std::string& card)// just for test
-        {
-            return card.find("yellow1") != std::string::npos;
-        }
-    private:
-        const int point = 1;
-        const int numOfCard = 10;
+    bool isYellowcard1(const std::string &card) // just for test
+    {
+        return card.find("yellow1") != std::string::npos;
+    }
 };

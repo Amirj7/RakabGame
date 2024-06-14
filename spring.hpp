@@ -1,11 +1,17 @@
+#pragma once
 #include <iostream>
+#include "cart.hpp" 
 
-class Spring 
+class Spring : public Card
 {
     public:
-        int getNumOfCard(){
-            return numOfCard;
-        }
-    private:
-        int numOfCard = 3;
+       int getNumOfCard() const override
+    {
+        return 3;
+    }
+
+     int getPoint() const override
+    {
+        return 0;
+    }
 };

@@ -1,16 +1,16 @@
+#pragma once
 #include <iostream>
+#include "cart.hpp"
 
-class Yellow3
+class Yellow3 : public Card
 {
     public:
-        int getPoint(){
-            return point;
-        }
-
-        int getNumOfCard(){
-            return numOfCard;
-        }
-    private:
-        const int point = 3;
-        const int numOfCard = 8;
+        int getPoint() const override
+    {
+        return 1;
+    }
+    int getNumOfCard() const override
+    {
+        return 8;
+    }
 };
