@@ -136,7 +136,7 @@ public:
 
                 player.setCardsInHand(D.getTheLastElementOfCardsInDeck());
 
-                //player.showPlayerCards({player});
+                
                 player.showPlayerCards();
 
                 std::cout << "Choose a card to play or pass ('pass' to skip): ";
