@@ -31,14 +31,23 @@ public:
         NumberOfPlayers();
         setPlayers();
         setPlayersInformation();
+        battle.startBattle(players,deck);
         specifyTheRound(round);
-        showPlayerCards(players);
+        //showPlayerCards(players);
     }
 
     void NumberOfPlayers()
     {
-        std::cout << "Game is starting!" << std::endl
-                  << "please enter the number of players: ";
+        std::cout << "***********************************************" << std::endl;
+        std::cout << "*                                             *" << std::endl;
+        std::cout << "*               Welcome to RAKAB              *" << std::endl;
+        std::cout << "*                                             *" << std::endl;
+        std::cout << "*  An adventure awaits in the world of cards!  *" << std::endl;
+        std::cout << "*  Test your strategy and wit in this exciting *" << std::endl;
+        std::cout << "*       game of skill and cunning. Enjoy!      *" << std::endl;
+        std::cout << "*                                             *" << std::endl;
+        std::cout << "***********************************************" << std::endl;
+        std::cout << "please enter the number of players: ";
         std::cin >> numOfPlayers;
         while (numOfPlayers < 3 || numOfPlayers > 6)
         {
@@ -119,9 +128,9 @@ public:
 
     void neshanJangRestOfTheRounds(std::vector<Player> Pl)
     {
-        for(int i{} ; i < sizeof(Pl) / sizeof(Pl[0]) ; i++)
+        for (int i{}; i < sizeof(Pl) / sizeof(Pl[0]); i++)
         {
-            if(Pl[i].getWinner())
+            if (Pl[i].getWinner())
             {
                 std::cout << Pl[i].getName() << " please choose province for battle: ";
                 std::string province;
@@ -133,38 +142,49 @@ public:
         }
     }
 
-    void showPlayerCards(std::vector<Player> p)
-    {
-        for (int i{}; i < sizeof(p) / sizeof(p[0]); i++)
-        {
-            std::cout << "i want to show " << p[i].getName() << "'s cards!." << std::endl;
-            std::cout << "please give the system to " << p[i].getName() << std::endl;
+    // void showPlayerCards(std::vector<Player> p)
+    // {
+    //     for (int i{}; i < sizeof(p) / sizeof(p[0]); i++)
+    //     {
+    //         std::cout << "i want to show " << p[i].getName() << "'s cards!." << std::endl;
+    //         std::cout << "please give the system to " << p[i].getName() << std::endl;
 
-            bool showCards = false;
-            int counter{2};
-            while (counter != 0)
-            {
-                int key = _getch();
-                if (key == 13)
-                { // 13 is the ASCII code for Enter key
-                    if (showCards)
-                    {
-                        // Clear the console
-                        system("CLS");
-                        showCards = false;
-                        counter--;
-                    }
-                    else
-                    {
-                        // Display the message
-                        p[i].getCardsInHand();
-                        showCards = true;
-                        counter--;
-                    }
-                }
-            }
-        }
-    }
+    //         bool showCards = false;
+    //         int counter{2};
+    //         while (counter != 0)
+    //         {
+    //             int key = _getch();
+    //             if (key == 13)
+    //             { // 13 is the ASCII code for Enter key
+    //                 if (showCards)
+    //                 {
+    //                     // Clear the console
+    //                     system("CLS");
+    //                     showCards = false;
+    //                     counter--;
+    //                 }
+    //                 else
+    //                 {
+    //                     // Display the message
+    //                     p[i].getCardsInHand();
+    //                     showCards = true;
+    //                     counter--;
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
+//     void showPlayerCards(const std::vector<Player>& players)
+// {
+//     for (const auto& player : players)
+//     {
+//         std::cout << "Showing " << player.getName() << "'s cards:" << std::endl;
+//         player.getCardsInHand(); // Assuming this function prints the cards in hand
+//         std::cout << "Press Enter to continue...";
+//         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Wait for Enter key
+//         std::cout << std::endl;
+//     }
+// }
 
 
 private:
