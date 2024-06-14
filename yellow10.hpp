@@ -3,7 +3,7 @@
 class Yellow10
 {
     public:
-        int get_Point(){
+        int getPoint(){
             return point;
         }
 

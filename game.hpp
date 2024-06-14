@@ -21,22 +21,21 @@
 class Game
 {
 public:
-    Game() // This is the class constructor that call the startGame function for start the game :o
+    Game()
     {
         startGame();
     };
 
-    void startGame() // this function call other functions that we need in game :o fix it!!!!
+    void startGame()
     {
         NumberOfPlayers();
         setPlayers();
         setPlayersInformation();
         specifyTheRound(round);
         showPlayerCards(players);
-        startBattel(players);
     }
 
-    void NumberOfPlayers() // this function get the number of players
+    void NumberOfPlayers()
     {
         std::cout << "Game is starting!" << std::endl
                   << "please enter the number of players: ";
@@ -48,7 +47,7 @@ public:
         }
     }
 
-    void setPlayers() // this function set the players and make an object of the player class and put them in vector
+    void setPlayers()
     {
         for (int i{}; i < numOfPlayers; i++)
         {
@@ -56,7 +55,7 @@ public:
         }
     }
 
-    void setPlayersInformation() // this fnction get the player informations such as name,age,...
+    void setPlayersInformation()
     {
         for (int i{}; i < numOfPlayers; i++)
         {
@@ -97,7 +96,7 @@ public:
         return *temp;
     }
 
-    void specifyTheRound(int R) // this function specify the round to let players change the neshanejang
+    void specifyTheRound(int R)
     {
         if (R = 1)
         {
@@ -109,7 +108,7 @@ public:
         }
     }
 
-    void neshanJangRoundOne() // in round one the smallest player should start the battel
+    void neshanJangRoundOne()
     {
         std::cout << findTheSmallestPlayer(players).getName() << " please choose province for battle: ";
         std::string province;
@@ -118,11 +117,11 @@ public:
         round++;
     }
 
-    void neshanJangRestOfTheRounds(std::vector<Player> Pl) // in other rounds something changes
+    void neshanJangRestOfTheRounds(std::vector<Player> Pl)
     {
-        for (int i{}; i < sizeof(Pl) / sizeof(Pl[0]); i++)
+        for(int i{} ; i < sizeof(Pl) / sizeof(Pl[0]) ; i++)
         {
-            if (Pl[i].getWinner())
+            if(Pl[i].getWinner())
             {
                 std::cout << Pl[i].getName() << " please choose province for battle: ";
                 std::string province;
@@ -134,7 +133,7 @@ public:
         }
     }
 
-    void showPlayerCards(std::vector<Player> p) // this fnction should show the player cards
+    void showPlayerCards(std::vector<Player> p)
     {
         for (int i{}; i < sizeof(p) / sizeof(p[0]); i++)
         {
@@ -167,100 +166,6 @@ public:
         }
     }
 
-    void startBattel(std::vector<Player> x) // this function should start the game
-    {
-        std::cout << "the battel is starting!" << std::endl;
-
-        std::vector<bool> hasPassed(players.size(), false); // vector to keep passed players
-        while (true)
-        {
-            bool allpassed = true;
-            for (int i{}; i < sizeof(x) / sizeof(x[0]); i++)
-            {
-                if (!hasPassed[i])
-                {
-                    allpassed = false;
-                    while (true)
-                    {
-                        std::string choice;
-                        std::cout << players[i].getName() << ", do you want to pass or play a card (pass/play) ? : " << std::endl;
-                        std::cin >> choice;
-                        if (choice == "pass")
-                        {
-                            std::cout << players[i].getName() << " has chosen to pass this turn" << std::endl;
-                            break;
-                        }
-                        else if (choice == "play")
-                        {
-                            std::cout << players[i].getName() << " Please choose a card : " << std::endl;
-                            std::string cards;
-                            std::cin >> cards;
-
-                            if (players[i].isYellowcard(cards))
-                            {
-                                players[i].setYellowCardsOnTable(cards);
-                            }
-                            else
-                            {
-                                players[i].setPurpleCardsOnTable(cards);
-                            }
-                            break;
-                        }
-                        else
-                        {
-                            std::cout << "invalid choose please try again! " << std::endl;
-                        }
-                    }
-                }
-            }
-            if (allpassed)
-            {
-                break;
-            }
-        }
-    }
-
-    void calculateScore(std::vector<Player> m) //fix it
-    {
-        for(int i{} ; i < sizeof(m) / sizeof(m[0]) ; i++)
-        {
-            int score = 0;
-            std::vector<std::string> yellowCards = m[i].getYellowCardsOnTable();
-            for(auto &card : yellowCards)
-            {
-                if (card == "Yellow1")
-                {
-                    score += 1;
-                } 
-                    
-                else if (card == "Yellow2")
-                {
-                    score += 2;
-                }
-                else if (card == "Yellow3") 
-                {
-                    score += 3;
-                }
-                else if (card == "Yellow4") 
-                {
-                    score += 4;
-                }
-                else if (card == "Yellow5") 
-                {
-                    score += 5;
-                }
-                else if (card == "Yellow6") 
-                {
-                    score += 6;
-                }
-                else if (card == "Yellow10") 
-                {
-                    score += 10;
-                }
-            }
-            std::cout << m[i].getName() << "'s score: " << score << std::endl;
-        }
-    }
 
 private:
     int numOfPlayers;

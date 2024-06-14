@@ -1,6 +1,5 @@
 #include <iostream>
 #include <vector>
-#include "yellow1.hpp"
 
 class Player
 {
@@ -44,24 +43,13 @@ class Player
         {
             for(int i{} ; i < sizeof(cardsInHand) / sizeof(cardsInHand[0]) ; i++)
             {
-                std::cout << cardsInHand[i] << " ";
+                std::cout << cardsInHand[i] << "  ";
             }
         }
-
-        bool isYellowcard(const std::string& card)
-        {
-            return card.find("yellow") != std::string::npos;
-        }
-
 
         void setYellowCardsOnTable(std::string y)
         {
             yellowCardsOnTable.push_back(y);
-        }
-
-        std::vector<std::string> getYellowCardsOnTable()
-        {
-            return yellowCardsOnTable;
         }
 
         void setPurpleCardsOnTable(std::string p)
@@ -73,41 +61,10 @@ class Player
         {
             return (sizeof(capturedCities) / sizeof(capturedCities[0]));
         }
-
-        void setNumOfShirdokhtCard(std::vector<std::string> Sh)
-        {
-            int counter;
-            for(int i{} ; i < sizeof(Sh) / sizeof(Sh[0]) ; i++)
-            {
-                if(Sh[i] == "shirdokht")
-                {
-                    counter++;
-                }
-            }
-            numOfShirdokhtCard = counter;
-        }
-
-        int getNumOfShirdokhtCard()
-        {
-            return numOfShirdokhtCard;
-        }
     
         void setWinner(bool x)
         {
             winner = x;
-        }
-
-        void setPlayerscore(std::vector<std::string> yellowcards)//test
-        {
-            for( int i{} ;i < sizeof(yellowcards) / sizeof(yellowcards[0]) ; i++ )
-            {
-                int score;
-                if(w1.isYellowcard1(yellowcards[i]))
-                {
-                    score += 1;
-                }
-            }
-
         }
 
         bool getWinner()
@@ -115,8 +72,108 @@ class Player
             return winner;
         }
     
+        void setPass(bool temp)
+        {
+            pass = temp;
+        }
+    
+        bool getPass()
+        {
+            return pass;
+        }
+
+        bool checkThatPlayerHaveTheCardOrNot(std::string n)
+    {
+        bool x = false;
+        for(int i{} ; i < sizeof(cardsInHand) / sizeof(cardsInHand[0]) ; i++)
+        {
+            if(cardsInHand[i] == n)
+            {
+                x = true;
+            }
+        }
+        return x;
+    } 
+    
+        bool isYellowCard(std::string s)
+        {
+            bool x = false;
+            if (s.find("yellow"))
+            {
+                x = true;
+            }
+            return x;
+        }
+
+        std::string getYellowCardsOnTable(int m)
+        {
+            return yellowCardsOnTable[m];
+        }
+
+        int getSizeOfYellowCardsOnTable()
+        {
+            return (sizeof(yellowCardsOnTable) / sizeof(yellowCardsOnTable[0]));
+        }
+
+        std::string getPurpleCardsOnTable(int m)
+        {
+            return purpleCardsOnTable[m];
+        }
+
+        int getSizeOfPurpleCardsOnTable()
+        {
+            return (sizeof(purpleCardsOnTable) / sizeof(purpleCardsOnTable[0]));
+        }
+
+        void setYellowCardsScoreInYellowCardsScore(int x)
+        {
+            yellowCardsScore += x;
+        }
+
+        void setPurpleCardsScoreInPuepleCardsScore(int x)
+        {
+            purpleCardsScore += x;
+        }
+
+        int getYellowCardsScore()
+        {
+            return yellowCardsScore;
+        }
+
+        void popBackCardsOnTable(std::string s)
+        {
+            if(isYellowCard(s))
+            {
+                for(int i{} ; i < sizeof(yellowCardsOnTable) / sizeof(yellowCardsOnTable[0]) ; i++)
+                {
+                    if(yellowCardsOnTable[i] == s)
+                    {
+                        yellowCardsOnTable[i].pop_back();
+                    }
+                }
+            }
+            else
+            {
+                for(int i{} ; i < sizeof(purpleCardsOnTable) / sizeof(purpleCardsOnTable[0]) ; i++)
+                {
+                    if(purpleCardsOnTable[i] == s)
+                    {
+                        purpleCardsOnTable[i].pop_back();
+                    }     
+                }
+            }
+        }
+    
+        void winterOnYellowCardsScore()
+        {
+            yellowCardsScore = (yellowCardsScore / yellowCardsScore);
+        }
+   
+        void setTotalScore()
+        {
+            totalScore = purpleCardsScore + yellowCardsScore;
+        }
     private:
-        Yellow1 w1;
         std::string name;
         int age;
         std::string color;
@@ -124,7 +181,9 @@ class Player
         std::vector <std::string> purpleCardsOnTable;
         std::vector <std::string> yellowCardsOnTable;
         std::vector <std::string> capturedCities;
-        int numOfShirdokhtCard;
         bool winner = false;
+        bool pass = false;
+        int totalScore;
+        int yellowCardsScore;
+        int purpleCardsScore;
 };
-
