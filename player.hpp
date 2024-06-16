@@ -86,29 +86,18 @@ public:
         return pass;
     }
 
-    // bool checkThatPlayerHaveTheCardOrNot(std::string n)
-    // {
-    //     bool x = false;
-    //     for (int i{}; i < sizeof(cardsInHand) / sizeof(cardsInHand[0]); i++)
-    //     {
-    //         if (cardsInHand[i] == n)
-    //         {
-    //             x = true;
-    //         }
-    //     }
-    //     return x;
-    // }
     bool checkThatPlayerHaveTheCardOrNot(std::string cardName)
     {
-        bool exist = false ;
-        for (auto &card : cardsInHand){
-            if (card == cardName){
-                exist = true ;
+        bool exist = false;
+        for (auto &card : cardsInHand)
+        {
+            if (card == cardName)
+            {
+                exist = true;
             }
         }
-        return exist ;
+        return exist;
     }
-
 
     bool isYellowCard(std::string s)
     {
@@ -145,7 +134,7 @@ public:
         yellowCardsScore += x;
     }
 
-    void setPurpleCardsScoreInPuepleCardsScore(int x)
+    void setPurpleCardsScoreInPurpleCardsScore(int x)
     {
         purpleCardsScore += x;
     }
@@ -155,7 +144,16 @@ public:
         return yellowCardsScore;
     }
 
-    void popBackCardsOnTable(std::string s)
+    int getPurpleCardsScore()
+    {
+        return purpleCardsScore;
+    }
+
+    int getTotalScore()
+    {
+        return totalScore;
+    }
+    void popBackCardsOnTable(const std::string s)
     {
         if (isYellowCard(s))
         {
@@ -175,6 +173,43 @@ public:
                 {
                     purpleCardsOnTable[i].pop_back();
                 }
+            }
+        }
+    }
+
+    void popBackCardsOnTable(const std::string &s)
+    {
+        if (isYellowCard(s))
+        {
+            auto it = std::find(yellowCardsOnTable.begin(), yellowCardsOnTable.end(), s);
+            if (it != yellowCardsOnTable.end())
+            {
+                yellowCardsOnTable.erase(it);
+            }
+        }
+        else
+        {
+            auto it = std::find(purpleCardsOnTable.begin(), purpleCardsOnTable.end(), s);
+            if (it != purpleCardsOnTable.end())
+            {
+                purpleCardsOnTable.erase(it);
+            }
+        }
+    }
+
+    void playCard(const std::string &card)
+    {
+        auto it = std::find(cardsInHand.begin(), cardsInHand.end(), card);
+        if (it != cardsInHand.end())
+        {
+            cardsInHand.erase(it);
+            if (isYellowCard(card))
+            {
+                setYellowCardsOnTable(card);
+            }
+            else
+            {
+                setPurpleCardsOnTable(card);
             }
         }
     }
@@ -203,45 +238,23 @@ public:
         totalScore = purpleCardsScore + yellowCardsScore + springCardsScore;
     }
 
-    // void showPlayerCards(std::vector<Player> p)
-    // {
-    //     for (int i{}; i < sizeof(p) / sizeof(p[0]); i++)
-    //     {
-    //         std::cout << "i want to show " << p[i].getName() << "'s cards!." << std::endl;
-    //         std::cout << "please give the system to " << p[i].getName() << std::endl;
+    void showPlayerCards()
+    {
+        for (auto &card : cardsInHand)
+        {
+            std::cout << card << "  ";
+        }
+    }
 
-    //         bool showCards = false;
-    //         int counter{2};
-    //         while (counter != 0)
-    //         {
-    //             int key = _getch();
-    //             if (key == 13)
-    //             { // 13 is the ASCII code for Enter key
-    //                 if (showCards)
-    //                 {
-    //                     // Clear the console
-    //                     system("CLS");
-    //                     showCards = false;
-    //                     counter--;
-    //                 }
-    //                 else
-    //                 {
-    //                     // Display the message
-    //                     p[i].getCardsInHand();
-    //                     showCards = true;
-    //                     counter--;
-    //                 }
-    //             }
-    //         }
-    //     }
-    // }
-void showPlayerCards()
-{
-for (auto &card : cardsInHand){
-    std::cout << card << "  ";
-}
-}
+    void resetYellowCardsScore()
+    {
+        yellowCardsScore = 0;
+    }
 
+    void resetPurpleCardsScore()
+    {
+        purpleCardsScore = 0;
+    }
 
 
 private:

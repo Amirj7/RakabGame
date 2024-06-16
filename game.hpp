@@ -142,51 +142,7 @@ public:
         }
     }
 
-    // void showPlayerCards(std::vector<Player> p)
-    // {
-    //     for (int i{}; i < sizeof(p) / sizeof(p[0]); i++)
-    //     {
-    //         std::cout << "i want to show " << p[i].getName() << "'s cards!." << std::endl;
-    //         std::cout << "please give the system to " << p[i].getName() << std::endl;
-
-    //         bool showCards = false;
-    //         int counter{2};
-    //         while (counter != 0)
-    //         {
-    //             int key = _getch();
-    //             if (key == 13)
-    //             { // 13 is the ASCII code for Enter key
-    //                 if (showCards)
-    //                 {
-    //                     // Clear the console
-    //                     system("CLS");
-    //                     showCards = false;
-    //                     counter--;
-    //                 }
-    //                 else
-    //                 {
-    //                     // Display the message
-    //                     p[i].getCardsInHand();
-    //                     showCards = true;
-    //                     counter--;
-    //                 }
-    //             }
-    //         }
-    //     }
-    // }
-//     void showPlayerCards(const std::vector<Player>& players)
-// {
-//     for (const auto& player : players)
-//     {
-//         std::cout << "Showing " << player.getName() << "'s cards:" << std::endl;
-//         player.getCardsInHand(); // Assuming this function prints the cards in hand
-//         std::cout << "Press Enter to continue...";
-//         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Wait for Enter key
-//         std::cout << std::endl;
-//     }
-// }
-
-
+    
 private:
     int numOfPlayers;
     std::vector<Player> players;
