@@ -1,8 +1,8 @@
 #pragma once
 #include <iostream>
-#include "cart.hpp"
+#include "card.hpp"
 
-class Yellow1 : public Card
+class Yellow1 : public Cards
 {
 public:
     int getPoint() const override
@@ -12,10 +12,5 @@ public:
     int getNumOfCard() const override
     {
         return 10;
-    }
-
-    bool isYellowcard1(const std::string &card) // just for test
-    {
-        return card.find("yellow1") != std::string::npos;
     }
 };

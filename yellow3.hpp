@@ -1,13 +1,13 @@
 #pragma once
 #include <iostream>
-#include "cart.hpp"
+#include "card.hpp"
 
-class Yellow3 : public Card
+class Yellow3 : public Cards
 {
     public:
         int getPoint() const override
     {
-        return 1;
+        return 3;
     }
     int getNumOfCard() const override
     {

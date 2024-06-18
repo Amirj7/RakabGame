@@ -1,8 +1,8 @@
 #pragma once
 #include <iostream>
-#include "cart.hpp"
+#include "card.hpp"
 
-class Yellow10 : public Card
+class Yellow10 : public Cards
 {
     public:
         int getPoint() const override

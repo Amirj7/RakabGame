@@ -1,8 +1,8 @@
 #pragma once
 #include <iostream>
-#include "cart.hpp" 
+#include "card.hpp" 
 
-class Spring : public Card
+class Spring : public Cards
 {
     public:
        int getNumOfCard() const override
