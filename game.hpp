@@ -15,6 +15,7 @@ class Game
         }
 
         void startGame(){
+            //display();
             welcomeAndGetNumberOfPlayers();
             setPlayersInVector();
             specifyTheRound();
@@ -25,7 +26,7 @@ class Game
             
             for(int i{} ; i < players.size() ; i++)
             {
-                std::cout << players[i].getName() << " : " << players[i].getYellowScore() << std::endl;
+                std::cout << players[i].getName() << " : " << players[i].getYellowScore() << std::endl << "score" << players[i].getTotalScore()<< std::endl;
             }
             char ch = getch();
         }

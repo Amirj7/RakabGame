@@ -36,9 +36,10 @@ public:
 
     bool isYellow(std::string c)
     {
-        if (c.find("yellow"))
+        int isthere  = c.find("yellow") ;
+        if (isthere == 0 )
         {
-            return true;
+            return true; 
         }
         else
         {
@@ -46,7 +47,7 @@ public:
         }
     }
 
-    void startBattle(std::vector<Player> p)
+    void startBattle(std::vector<Player>& p)
     {
         while (checkPass(p) == false)
         {
@@ -70,8 +71,9 @@ public:
                     }
                     else
                     {
-                        if (isYellow(choice) == false)
+                        if (isYellow(choice) ==  true)
                         {
+                            std::cout << "played yellow" <<std::endl;
                             p[i].setYellowCardsOnTable(choice);
                             p[i].popBackCardsInhand(choice);
                             if (choice == "yellow1")
@@ -227,7 +229,7 @@ public:
             p[i].setTotalScore(shahdokht * tablzan);
 
             // calculate yellowcards score
-            if (season == 0)
+            if (season == 0) // winter
             {
                 p[i].setTotalScore(p[i].getYellowCardsOnTable().size());
             }
@@ -257,19 +259,31 @@ public:
         }
     }
 
-    std::string checkWinner(std::vector<Player> p)
+    // std::string checkWinner(std::vector<Player> &p)
+    // {
+    //     Player temp = p[0];
+    //     for (int i{}; i < p.size(); i++)
+    //     {
+    //         if (p[i].getTotalScore() > temp.getTotalScore())
+    //         {
+    //             temp = p[i];
+    //         }
+    //     }
+    //     temp.setWinnerForNeshanJang(true);
+    //     temp.setCapturedCities(neshanJang);
+    //     return temp.getName();
+    // }
+    std::string checkWinner(std::vector<Player> &p)
     {
-        Player temp = p[0];
-        for (int i{}; i < p.size(); i++)
-        {
-            if (p[i].getTotalScore() > temp.getTotalScore())
-            {
-                temp = p[i];
+        int max = 0 ;
+        std::string winner;
+        for (int i = 0 ; i < p.size() ; i++){
+            if (p[i].getTotalScore() > max ){
+                max = p[i].getTotalScore();
+                winner = p[i].getName();
             }
         }
-        temp.setWinnerForNeshanJang(true);
-        temp.setCapturedCities(neshanJang);
-        return temp.getName();
+        return winner ;
     }
 
 private:

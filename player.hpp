@@ -12,6 +12,8 @@ public:
         setAge(a);
         setColor(c);
         setCardsInHand(h);
+        yellowCardsScore = 0 ;
+        totalScore = 0;
     }
 
     void setName(std::string n)
@@ -153,7 +155,7 @@ public:
         // {
         //     yellowCardsScore.push_back(10);
         // }
-        yellowCardsScore += a;
+        yellowCardsScore = yellowCardsScore + a;
         // std::sort(yellowCardsScore.begin() , yellowCardsScore.end());
     }
     int getYellowScore()
@@ -189,8 +191,8 @@ private:
     bool pass = false;
     std::vector<std::string> yellowCardsOnTable;
     std::vector<std::string> purpleCardsOnTable;
-    int totalScore;
-    int yellowCardsScore;
+    int totalScore ;
+    int yellowCardsScore ;
     std::vector<std::string> capturedCities;
     int biggestYellowCard;
 };
