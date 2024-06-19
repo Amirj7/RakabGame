@@ -204,7 +204,7 @@ public:
         }
         return playersName; 
     }
-    void calculatePlayersScore(std::vector<Player> p)
+    void calculatePlayersScore(std::vector<Player>& p)
     {
         // calculate purplecards score
         for (int i{}; i < p.size(); i++)
@@ -259,32 +259,21 @@ public:
         }
     }
 
-    // std::string checkWinner(std::vector<Player> &p)
-    // {
-    //     Player temp = p[0];
-    //     for (int i{}; i < p.size(); i++)
-    //     {
-    //         if (p[i].getTotalScore() > temp.getTotalScore())
-    //         {
-    //             temp = p[i];
-    //         }
-    //     }
-    //     temp.setWinnerForNeshanJang(true);
-    //     temp.setCapturedCities(neshanJang);
-    //     return temp.getName();
-    // }
     std::string checkWinner(std::vector<Player> &p)
     {
-        int max = 0 ;
-        std::string winner;
-        for (int i = 0 ; i < p.size() ; i++){
-            if (p[i].getTotalScore() > max ){
-                max = p[i].getTotalScore();
-                winner = p[i].getName();
+        Player temp = p[0];
+        for (int i{}; i < p.size(); i++)
+        {
+            if (p[i].getTotalScore() > temp.getTotalScore())
+            {
+                temp = p[i];
             }
         }
-        return winner ;
+        temp.setWinnerForNeshanJang(true);
+        temp.setCapturedCities(neshanJang);
+        return temp.getName();
     }
+    
 
 private:
     int season = 2; // spring = 1 / winter = 0
