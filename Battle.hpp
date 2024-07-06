@@ -190,14 +190,14 @@ public:
         {
             int tablzan = 1;
             std::vector<std::string> temp = p[i].getPurpleCardsOnTable();
-            for (int j{}; j < p[i].getPurpleCardsOnTable().size(); j++)
+            for (int j{}; j < p[i].getPurpleCardsOnTable().size(); j++) //check the number of each players tablzan
             {
                 if (temp[j] == "tablzan")
                 {
                     tablzan = tablzan * 2;
                 }
             }
-            for (int j{}; j < p[i].getPurpleCardsOnTable().size(); j++)
+            for (int j{}; j < p[i].getPurpleCardsOnTable().size(); j++) //check the number of each players shahdokht
             {
                 if (temp[j] == "shahdokht")
                 {
@@ -208,7 +208,7 @@ public:
             // calculate yellowcards score
             if (season == 0)
             {
-                p[i].setTotalScore(p[i].getYellowCardsOnTable().size() * tablzan);
+                p[i].setTotalScore(p[i].getYellowCardsOnTable().size() * tablzan); // *tablzan if player had tablzan
             }
             else if (season == 1)
             {
@@ -243,7 +243,7 @@ public:
         return temp.getName();
     }
 
-    void setPlayersNameForSpring(std::vector<Player> &p)
+    void setPlayersNameForSpring(std::vector<Player> &p) // func for fill playersNameForSpring vector 
     {
         Player temp = p[0];
         int index = 0;
@@ -268,7 +268,7 @@ public:
         }
     }
 private:
-    std::vector<std::string> playersNameForSpring;
+    std::vector<std::string> playersNameForSpring; // A vector to keep the names of the players that have the largest card in the game 
     int season = 2; // spring = 1 / winter = 0
     std::string neshanJang;
     int round = 1;

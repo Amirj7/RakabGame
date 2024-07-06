@@ -20,11 +20,11 @@ class Game
             specifyTheRound();
             showPlayersCard();
             battle.startBattle(players);
-            battle.setPlayersNameForSpring(players);
+            battle.setPlayersNameForSpring(players);// before calculate the score spring should be check
             battle.calculatePlayersScore(players);
             std::cout << battle.checkWinnerOfTheRound(players) << std::endl;
             
-            for(int i{} ; i < players.size() ; i++)
+            for(int i{} ; i < players.size() ; i++)// just for debug
             {
                 std::cout << players[i].getName() << " : " << players[i].getTotalScore() << std::endl;
             }
@@ -92,7 +92,7 @@ class Game
                 int age;
                 std::cout << "Player" << i+1 << " please enter your age: ";
                 std::cin >> age;
-                while(age <= 0)
+                while(age <= 0) // check that age is bigger than 0 or not
                 {
                     std::cout << "invalid age!please enter your age correctly: ";
                     std::cin >> age;
