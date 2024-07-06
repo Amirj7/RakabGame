@@ -36,10 +36,10 @@ public:
 
     bool isYellow(std::string c)
     {
-        int isthere  = c.find("yellow") ;
-        if (isthere == 0 )
+        int isthere = c.find("yellow");
+        if (isthere == 0)
         {
-            return true; 
+            return true;
         }
         else
         {
@@ -47,7 +47,7 @@ public:
         }
     }
 
-    void startBattle(std::vector<Player>& p)
+    void startBattle(std::vector<Player> &p)
     {
         while (checkPass(p) == false)
         {
@@ -71,9 +71,8 @@ public:
                     }
                     else
                     {
-                        if (isYellow(choice) ==  true)
+                        if (isYellow(choice) == true)
                         {
-                            std::cout << "played yellow" <<std::endl;
                             p[i].setYellowCardsOnTable(choice);
                             p[i].popBackCardsInhand(choice);
                             if (choice == "yellow1")
@@ -142,7 +141,7 @@ public:
                             }
                             else if (choice == "spring")
                             {
-                                season == 1;
+                                season = 1;
                                 p[i].popBackCardsInhand(choice);
                             }
                             else if (choice == "matarsak")
@@ -183,34 +182,13 @@ public:
         }
     }
 
-    std::vector<std::string> checkBiggestCardInGame(std::vector<Player> p)
-    {
-        Player temp = p[0];
-        std::vector<std::string> playersName;
-        for(int i{} ; i < p.size() ; i++)
-        {
-            if(p[i].getBiggestYellowCard() > temp.getBiggestYellowCard())
-            {
-                temp = p[i];
-            }
-        }
-        playersName.push_back(temp.getName());
-        for(int i{} ; i < p.size() ; i++)
-        {
-            if(p[i].getBiggestYellowCard() == temp.getBiggestYellowCard())
-            {
-                playersName.push_back(p[i].getName());
-            }
-        }
-        return playersName; 
-    }
-    void calculatePlayersScore(std::vector<Player>& p)
+
+    void calculatePlayersScore(std::vector<Player> &p)
     {
         // calculate purplecards score
         for (int i{}; i < p.size(); i++)
         {
             int tablzan = 1;
-            int shahdokht = 0;
             std::vector<std::string> temp = p[i].getPurpleCardsOnTable();
             for (int j{}; j < p[i].getPurpleCardsOnTable().size(); j++)
             {
@@ -223,43 +201,34 @@ public:
             {
                 if (temp[j] == "shahdokht")
                 {
-                    shahdokht += 10;
+                    p[i].setTotalScore(10);
                 }
             }
-            p[i].setTotalScore(shahdokht * tablzan);
 
             // calculate yellowcards score
-            if (season == 0) // winter
+            if (season == 0)
             {
-                p[i].setTotalScore(p[i].getYellowCardsOnTable().size());
+                p[i].setTotalScore(p[i].getYellowCardsOnTable().size() * tablzan);
             }
             else if (season == 1)
             {
-                p[i].setTotalScore(p[i].getYellowScore());
-                if (shahdokht > 0)
+                p[i].setTotalScore(p[i].getYellowScore() * tablzan);
+                for(int j{} ; j < p.size() ; j++)
                 {
-                    p[i].setTotalScore(3);
-                }
-                else
-                {
-                    std::vector<std::string> temp = checkBiggestCardInGame(p);
-                    for (int i{}; i < temp.size(); i++)
+                    if(p[i].getName() == playersNameForSpring[j])
                     {
-                        if (p[i].getName() == temp[i])
-                        {
-                            p[i].setTotalScore(3);
-                        }
+                        p[i].setTotalScore(3);
                     }
                 }
             }
             else if (season == 2)
             {
-               p[i].setTotalScore(p[i].getYellowScore());    
+                p[i].setTotalScore(p[i].getYellowScore() * tablzan);
             }
         }
     }
 
-    std::string checkWinner(std::vector<Player> &p)
+    std::string checkWinnerOfTheRound(std::vector<Player> &p)
     {
         Player temp = p[0];
         for (int i{}; i < p.size(); i++)
@@ -273,9 +242,34 @@ public:
         temp.setCapturedCities(neshanJang);
         return temp.getName();
     }
-    
 
+    void setPlayersNameForSpring(std::vector<Player> &p)
+    {
+        Player temp = p[0];
+        int index = 0;
+        for (int i{}; i < p.size(); i++)
+        {
+            if(temp.getBiggestYellowCard() < p[i].getBiggestYellowCard())
+            {
+                temp = p[i];
+                index = i;
+            }
+        }
+        playersNameForSpring.push_back(temp.getName());
+        for(int i{}; i < p.size(); i++)
+        {
+            if(index != i)
+            {
+                if(temp.getBiggestYellowCard() == p[i].getBiggestYellowCard())
+                {
+                    playersNameForSpring.push_back(p[i].getName());
+                }
+            }
+        }
+    }
 private:
+    std::vector<std::string> playersNameForSpring;
     int season = 2; // spring = 1 / winter = 0
     std::string neshanJang;
+    int round = 1;
 };

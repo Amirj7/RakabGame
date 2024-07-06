@@ -15,18 +15,18 @@ class Game
         }
 
         void startGame(){
-            //display();
             welcomeAndGetNumberOfPlayers();
             setPlayersInVector();
             specifyTheRound();
             showPlayersCard();
             battle.startBattle(players);
+            battle.setPlayersNameForSpring(players);
             battle.calculatePlayersScore(players);
-            std::cout << battle.checkWinner(players) << std::endl;
+            std::cout << battle.checkWinnerOfTheRound(players) << std::endl;
             
             for(int i{} ; i < players.size() ; i++)
             {
-                std::cout << players[i].getName() << " : " << players[i].getYellowScore() << std::endl << "score" << players[i].getTotalScore()<< std::endl;
+                std::cout << players[i].getName() << " : " << players[i].getTotalScore() << std::endl;
             }
             char ch = getch();
         }
@@ -92,6 +92,11 @@ class Game
                 int age;
                 std::cout << "Player" << i+1 << " please enter your age: ";
                 std::cin >> age;
+                while(age <= 0)
+                {
+                    std::cout << "invalid age!please enter your age correctly: ";
+                    std::cin >> age;
+                }
 
                 std::string color;
                 std::cout << "Player" << i+1 << " please enter your color: ";
@@ -106,18 +111,23 @@ class Game
     
         void showPlayersCard(){
             for(int i{} ; i < players.size() ; i++){
-                char ch = getch();
+                // char ch = getch();
                 std::vector<std::string> temp = players[i].getCardsInHand();
                 std::cout << players[i].getName() << " 's cards: ";
-                for(int j{} ; j < temp.size() ; j++){
+                for(int j{} ; j < temp.size() ; j++)
+                {
                     std::cout << temp[j] << " ";
                 }
                 std::cout << std::endl;
-                ch = getch();
-                system("CLS");
+                // ch = getch();
+                // system("CLS");
             }
         }
         
+        int getRound()
+        {
+            return round;
+        }
         void specifyTheRound()
         {
             if (round = 1)
@@ -150,6 +160,11 @@ class Game
                 }
             }
         }
+    
+    
+
+
+
     private:
         int numOfPlayers;
         std::vector<Player> players;
