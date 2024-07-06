@@ -89,6 +89,12 @@ class Deck
                 cardsInDeck.push_back("winter");
             }
 
+            Tablzan T;
+            for(int i{}; i < T.getNumOfCard(); i++)
+            {
+                cardsInDeck.push_back("tablzan");
+            }
+
             shuffleDeck();
         }
     
