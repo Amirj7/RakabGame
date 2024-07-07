@@ -35,11 +35,11 @@ public:
         battle.startBattle(players);
         battle.setPlayersNameForSpring(players); // before calculating the score, spring should be checked
         battle.calculatePlayersScore(players);
-        std::cout << battle.checkWinnerOfTheRound(players) << std::endl;
+        std::cout << battle.checkWinnerOfTheRound(players , city) << std::endl;
 
         for (int i{}; i < players.size(); i++) // just for debug
         {
-            std::cout << players[i].getName() << " : " << players[i].getTotalScore() << std::endl;
+            std::cout << players[i].getName() << " : " << players[i].getTotalScore() <<  std::endl;
         }
         char ch = getch();
     }
@@ -162,6 +162,7 @@ public:
             {
                 std::cout << temp.getName() << " please choose province for battle: ";
                 std::cin >> province;
+                city = province;
                 if (GameMap.isValidCity(province))
                 {
                     break;
@@ -200,6 +201,7 @@ public:
                         }
                     }
                     battle.setNeshanJang(province);
+                    city = province;
                     round++;
                     break;
                 }
@@ -208,6 +210,7 @@ public:
     }
 
 private:
+    std::string city;
     CityMap GameMap;
     int numOfPlayers;
     std::vector<Player> players;

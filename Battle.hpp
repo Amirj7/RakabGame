@@ -315,20 +315,27 @@ public:
         }
     }
 
-    std::string checkWinnerOfTheRound(std::vector<Player> &p)
+    std::string checkWinnerOfTheRound(std::vector<Player> &players, std::string &neshanJang)
+{
+    if (players.empty()) return "";
+
+    // Initialize temp with the first player
+    Player* temp = &players[0];
+
+    for (Player& player : players)
     {
-        Player temp = p[0];
-        for (int i{}; i < p.size(); i++)
+        if (player.getTotalScore() > temp->getTotalScore())
         {
-            if (p[i].getTotalScore() > temp.getTotalScore())
-            {
-                temp = p[i];
-            }
+            temp = &player;
         }
-        temp.setWinnerForNeshanJang(true);
-        temp.setCapturedCities(neshanJang);
-        return temp.getName();
     }
+    // Set the winner attributes for the player with the highest score
+    temp->setWinnerForNeshanJang(true);
+    temp->setCapturedCities(neshanJang);
+    
+    return temp->getName();
+}
+
 
     void setPlayersNameForSpring(std::vector<Player> &p) // func for fill playersNameForSpring vector
     {
@@ -355,51 +362,48 @@ public:
         }
     }
 
-    bool checkTheGameEndsOrNot(std::vector<Player> &p, CityMap &m)
+    bool checkTheGameEndsOrNot(vector<Player> &players, CityMap &map)
+{
+    for (int i = 0; i < players.size(); ++i)
     {
-        for (int i = 0; i < p.size(); ++i)
+        if (players[i].getWinnerForNeshanJang())
         {
-            if (p[i].getWinnerForNeshanJang())
+            const vector<string> &capturedCities = players[i].getCapturedCities();
+
+            // Check if player has captured 5 cities
+            if (capturedCities.size() >= 5)
             {
-                if ((p[i].getCapturedCities()).size() == 5)
+                cout << "Player " << players[i].getName() << " has captured 5 cities and wins the game!" << endl;
+                return true;
+            }
+
+            // Check if player has captured all nearby cities for any captured city
+            for (const auto &city : capturedCities)
+            {
+                const vector<string> &nearbyCities = map.getNearbyCities(city);
+                bool hasCapturedAllNearbyCities = true;
+
+                for (const auto &nearbyCity : nearbyCities)
                 {
-                    return true;
+                    if (find(capturedCities.begin(), capturedCities.end(), nearbyCity) == capturedCities.end())
+                    {
+                        hasCapturedAllNearbyCities = false;
+                        break;
+                    }
                 }
-                else
+
+                if (hasCapturedAllNearbyCities)
                 {
-                    bool hasCapturedAllNearbyCities = true;
-                    const std::vector<std::string> &capturedCities = p[i].getCapturedCities();
-
-                    for (int j = 0; j < capturedCities.size(); ++j)
-                    {
-                        const std::string &city = capturedCities[j];
-                        const std::vector<std::string> &nearbyCities = m.getNearbyCities(city);
-                        for (int k = 0; k < nearbyCities.size(); ++k)
-                        {
-                            const std::string &nearbyCity = nearbyCities[k];
-                            if (std::find(capturedCities.begin(), capturedCities.end(), nearbyCity) == capturedCities.end())
-                            {
-                                hasCapturedAllNearbyCities = false;
-                                break;
-                            }
-                        }
-                        if (!hasCapturedAllNearbyCities)
-                        {
-                            break;
-                        }
-                    }
-
-                    if (hasCapturedAllNearbyCities)
-                    {
-                        std::cout << "Player " << p[i].getName() << " has captured all the nearby cities and wins the game!" << std::endl;
-                        return true;
-                    }
+                    cout << "Player " << players[i].getName() << " has captured all nearby cities and wins the game!" << endl;
+                    return true;
                 }
             }
         }
-        std::cout << "No player has captured all the nearby cities yet." << std::endl;
-        return false;
     }
+
+    cout << "No player has met the winning conditions yet." << endl;
+    return false;
+}
 
 private:
     std::vector<std::string> playersNameForSpring; // A vector to keep the names of the players that have the largest card in the game
