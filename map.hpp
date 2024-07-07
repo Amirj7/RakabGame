@@ -5,9 +5,11 @@
 
 using namespace std;
 
-class CityMap {
+class CityMap
+{
 public:
-    CityMap() {
+    CityMap()
+    {
         nearbyCities["BELLA"] = {"CALINE", "PLADACI", "BORGE"};
         nearbyCities["CALINE"] = {"BALLA", "BORGE", "ENNA", "ATELA", "PLADACI"};
         nearbyCities["ENNA"] = {"CALINE", "ATELA", "BORGE", "DAMASE"};
@@ -24,12 +26,21 @@ public:
         nearbyCities["ELINIA"] = {"ROLLO", "TALMONE"};
     }
 
-    vector<string> getNearbyCities(string city) {
-        if (nearbyCities.find(city)!= nearbyCities.end()) {
+    vector<string> getNearbyCities(string city)
+    {
+        if (nearbyCities.find(city) != nearbyCities.end())
+        {
             return nearbyCities[city];
-        } else {
+        }
+        else
+        {
             return {};
         }
+    }
+
+    bool isValidCity(const string &city) const
+    {
+        return nearbyCities.find(city) != nearbyCities.end();
     }
 
 private:

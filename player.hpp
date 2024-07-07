@@ -12,7 +12,7 @@ public:
         setAge(a);
         setColor(c);
         setCardsInHand(h);
-        yellowCardsScore = 0 ;
+        yellowCardsScore = 0;
         totalScore = 0;
     }
 
@@ -56,7 +56,7 @@ public:
         cardsInHand.push_back(c);
     }
 
-    void setWinnerForNeshanJang(bool w)
+    void setWinnerForNeshanJang(const bool w)
     {
         winner = w;
     }
@@ -121,67 +121,42 @@ public:
     {
         totalScore += tScore;
     }
+
     int getTotalScore()
     {
         return totalScore;
     }
+
     void setYellowScore(int a)
     {
-        // if (choice == "yellow1")
-        // {
-        //     yellowCardsScore.push_back(1);
-        // }
-        // else if (choice == "yellow2")
-        // {
-        //     yellowCardsScore.push_back(2);
-        // }
-        // else if (choice == "yellow3")
-        // {
-        //     yellowCardsScore.push_back(3);
-        // }
-        // else if (choice == "yellow4")
-        // {
-        //     yellowCardsScore.push_back(4);
-        // }
-        // else if (choice == "yellow5")
-        // {
-        //     yellowCardsScore.push_back(5);
-        // }
-        // else if (choice == "yellow6")
-        // {
-        //     yellowCardsScore.push_back(6);
-        // }
-        // else if (choice == "yellow10")
-        // {
-        //     yellowCardsScore.push_back(10);
-        // }
         yellowCardsScore = yellowCardsScore + a;
-        // std::sort(yellowCardsScore.begin() , yellowCardsScore.end());
     }
+
     int getYellowScore()
     {
         return yellowCardsScore;
     }
 
-
     void setCapturedCities(std::string c)
     {
         capturedCities.push_back(c);
     }
+
     std::vector<std::string> getCapturedCities()
     {
         return capturedCities;
     }
 
-
     void setBiggestYellowCard(int b)
     {
         biggestYellowCard = b;
     }
+
     int getBiggestYellowCard()
     {
         return biggestYellowCard;
     }
+
 private:
     std::string name;
     int age;
@@ -191,8 +166,8 @@ private:
     bool pass = false;
     std::vector<std::string> yellowCardsOnTable;
     std::vector<std::string> purpleCardsOnTable;
-    int totalScore ;
-    int yellowCardsScore ;
+    int totalScore;
+    int yellowCardsScore;
     std::vector<std::string> capturedCities;
     int biggestYellowCard;
 };
