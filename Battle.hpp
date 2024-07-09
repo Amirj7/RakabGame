@@ -241,22 +241,39 @@ public:
                                 {
                                     std::cout << temp1[i] << "  ";
                                 }
-                                for (int i{}; i < p[i].getPurpleCardsOnTable().size(); i++)
-                                {
-                                    std::cout << temp2[i] << "  ";
-                                }
                                 std::cout << std::endl
                                           << p[i].getName() << "please choose a card to peak up: ";
                                 std::cin >> chosenCard;
+                                if (chosenCard == "yellow1")
+                                {
+                                    p[i].setTotalScore(-1);
+                                }
+                                else if (chosenCard == "yellow2")
+                                {
+                                    p[i].setTotalScore(-2);
+                                }
+                                else if (chosenCard == "yellow3")
+                                {
+                                    p[i].setTotalScore(-3);
+                                }
+                                else if (chosenCard == "yellow4")
+                                {
+                                    p[i].setTotalScore(-4);
+                                }
+                                else if (chosenCard == "yellow5")
+                                {
+                                    p[i].setTotalScore(-5);
+                                }
+                                else if (chosenCard == "yellow6")
+                                {
+                                    p[i].setTotalScore(-6);
+                                }
+                                else if (chosenCard == "yellow10")
+                                {
+                                    p[i].setTotalScore(-10);
+                                }
                                 p[i].setCardsInHand(chosenCard);
-                                if (isYellow(chosenCard))
-                                {
-                                    p[i].popBackCardsYellowCardsOnTable(chosenCard);
-                                }
-                                else
-                                {
-                                    p[i].popBackCardsPurpleCardsOnTable(chosenCard);
-                                }
+                                p[i].popBackCardsYellowCardsOnTable(chosenCard);
                             }
                             else
                             {
@@ -316,26 +333,26 @@ public:
     }
 
     std::string checkWinnerOfTheRound(std::vector<Player> &players, std::string &neshanJang)
-{
-    if (players.empty()) return "";
-
-    // Initialize temp with the first player
-    Player* temp = &players[0];
-
-    for (Player& player : players)
     {
-        if (player.getTotalScore() > temp->getTotalScore())
-        {
-            temp = &player;
-        }
-    }
-    // Set the winner attributes for the player with the highest score
-    temp->setWinnerForNeshanJang(true);
-    temp->setCapturedCities(neshanJang);
-    
-    return temp->getName();
-}
+        if (players.empty())
+            return "";
 
+        // Initialize temp with the first player
+        Player *temp = &players[0];
+
+        for (Player &player : players)
+        {
+            if (player.getTotalScore() > temp->getTotalScore())
+            {
+                temp = &player;
+            }
+        }
+        // Set the winner attributes for the player with the highest score
+        temp->setWinnerForNeshanJang(true);
+        temp->setCapturedCities(neshanJang);
+
+        return temp->getName();
+    }
 
     void setPlayersNameForSpring(std::vector<Player> &p) // func for fill playersNameForSpring vector
     {
@@ -362,48 +379,143 @@ public:
         }
     }
 
+    // bool checkTheGameEndsOrNot(vector<Player> &players, CityMap &map)
+    // {
+    //     for (int i = 0; i < players.size(); ++i)
+    //     {
+    //         if (players[i].getWinnerForNeshanJang())
+    //         {
+    //             const vector<string> &capturedCities = players[i].getCapturedCities();
+
+    //             // Check if player has captured 5 cities
+    //             if (capturedCities.size() >= 5)
+    //             {
+    //                 cout << "Player " << players[i].getName() << " has captured 5 cities and wins the game!" << endl;
+    //                 return true;
+    //             }
+
+    //             // Check if player has captured all nearby cities for any captured city
+    //             for (const auto &city : capturedCities)
+    //             {
+    //                 const vector<string> &nearbyCities = map.getNearbyCities(city);
+    //                 bool hasCapturedAllNearbyCities = true;
+
+    //                 for (const auto &nearbyCity : nearbyCities)
+    //                 {
+    //                     if (find(capturedCities.begin(), capturedCities.end(), nearbyCity) == capturedCities.end())
+    //                     {
+    //                         hasCapturedAllNearbyCities = false;
+    //                         break;
+    //                     }
+    //                 }
+
+    //                 if (hasCapturedAllNearbyCities)
+    //                 {
+    //                     cout << "Player " << players[i].getName() << " has captured all nearby cities and wins the game!" << endl;
+    //                     return true;
+    //                 }
+    //             }
+    //         }
+    //     }
+
+    //     cout << "No player has met the winning conditions yet." << endl;
+    //     return false;
+    // }
+
     bool checkTheGameEndsOrNot(vector<Player> &players, CityMap &map)
-{
-    for (int i = 0; i < players.size(); ++i)
     {
-        if (players[i].getWinnerForNeshanJang())
+        for (int i = 0; i < players.size(); ++i)
         {
-            const vector<string> &capturedCities = players[i].getCapturedCities();
-
-            // Check if player has captured 5 cities
-            if (capturedCities.size() >= 5)
+            if (players[i].getWinnerForNeshanJang())
             {
-                cout << "Player " << players[i].getName() << " has captured 5 cities and wins the game!" << endl;
-                return true;
-            }
-
-            // Check if player has captured all nearby cities for any captured city
-            for (const auto &city : capturedCities)
-            {
-                const vector<string> &nearbyCities = map.getNearbyCities(city);
-                bool hasCapturedAllNearbyCities = true;
-
-                for (const auto &nearbyCity : nearbyCities)
+                if (players[i].getCapturedCities().size() >= 5)
                 {
-                    if (find(capturedCities.begin(), capturedCities.end(), nearbyCity) == capturedCities.end())
-                    {
-                        hasCapturedAllNearbyCities = false;
-                        break;
-                    }
+                    cout << "Player " << players[i].getName() << " has captured 5 cities and wins the game!" << endl;
+                    return true;
                 }
 
-                if (hasCapturedAllNearbyCities)
+                if (players[i].getCapturedCities().size() == 3)
                 {
-                    cout << "Player " << players[i].getName() << " has captured all nearby cities and wins the game!" << endl;
-                    return true;
+                    vector<string> temp = players[i].getCapturedCities();
+                    vector<string> nearbyCities = map.getNearbyCities(temp[0]);
+
+                    auto itIs1 = std::find(nearbyCities.begin(), nearbyCities.end(), temp[1]);
+                    auto itIs2 = std::find(nearbyCities.begin(), nearbyCities.end(), temp[2]);
+                    if (itIs1 != nearbyCities.end() && itIs2 != nearbyCities.end())
+                    {
+                        nearbyCities = map.getNearbyCities(temp[1]);
+                        auto itIs = std::find(nearbyCities.begin(), nearbyCities.end(), temp[2]);
+                        if (itIs != nearbyCities.end())
+                        {
+                            return true;
+                        }
+                    }
+                    return false;
+                }
+
+                if (players[i].getCapturedCities().size() == 4)
+                {
+                    vector<string> temp = players[i].getCapturedCities();
+                    vector<string> nearbyCities = map.getNearbyCities(temp[0]);
+
+                    auto itIs1 = std::find(nearbyCities.begin(), nearbyCities.end(), temp[1]);
+                    auto itIs2 = std::find(nearbyCities.begin(), nearbyCities.end(), temp[2]);
+                    if (itIs1 != nearbyCities.end() && itIs2 != nearbyCities.end())
+                    {
+                        nearbyCities = map.getNearbyCities(temp[1]);
+                        auto itIs = std::find(nearbyCities.begin(), nearbyCities.end(), temp[2]);
+                        if (itIs != nearbyCities.end())
+                        {
+                            return true;
+                        }
+                    }
+
+                    nearbyCities = map.getNearbyCities(temp[0]);
+                    itIs1 = std::find(nearbyCities.begin(), nearbyCities.end(), temp[1]);
+                    itIs2 = std::find(nearbyCities.begin(), nearbyCities.end(), temp[3]);
+                    if (itIs1 != nearbyCities.end() && itIs2 != nearbyCities.end())
+                    {
+                        nearbyCities = map.getNearbyCities(temp[1]);
+                        auto itIs = std::find(nearbyCities.begin(), nearbyCities.end(), temp[3]);
+                        if (itIs != nearbyCities.end())
+                        {
+                            return true;
+                        }
+                    }
+
+                    nearbyCities = map.getNearbyCities(temp[0]);
+                    itIs1 = std::find(nearbyCities.begin(), nearbyCities.end(), temp[2]);
+                    itIs2 = std::find(nearbyCities.begin(), nearbyCities.end(), temp[3]);
+                    if (itIs1 != nearbyCities.end() && itIs2 != nearbyCities.end())
+                    {
+                        nearbyCities = map.getNearbyCities(temp[2]);
+                        auto itIs = std::find(nearbyCities.begin(), nearbyCities.end(), temp[3]);
+                        if (itIs != nearbyCities.end())
+                        {
+                            return true;
+                        }
+                    }
+
+                    nearbyCities = map.getNearbyCities(temp[1]);
+                    itIs1 = std::find(nearbyCities.begin(), nearbyCities.end(), temp[2]);
+                    itIs2 = std::find(nearbyCities.begin(), nearbyCities.end(), temp[3]);
+                    if (itIs1 != nearbyCities.end() && itIs2 != nearbyCities.end())
+                    {
+                        nearbyCities = map.getNearbyCities(temp[2]);
+                        auto itIs = std::find(nearbyCities.begin(), nearbyCities.end(), temp[3]);
+                        if (itIs != nearbyCities.end())
+                        {
+                            return true;
+                        }
+                    }
+
+                    return false;
                 }
             }
         }
+        cout << "No player has met the winning conditions yet." << endl;
+        return false;
     }
-
-    cout << "No player has met the winning conditions yet." << endl;
-    return false;
-}
 
 private:
     std::vector<std::string> playersNameForSpring; // A vector to keep the names of the players that have the largest card in the game
