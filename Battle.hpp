@@ -379,49 +379,6 @@ public:
         }
     }
 
-    // bool checkTheGameEndsOrNot(vector<Player> &players, CityMap &map)
-    // {
-    //     for (int i = 0; i < players.size(); ++i)
-    //     {
-    //         if (players[i].getWinnerForNeshanJang())
-    //         {
-    //             const vector<string> &capturedCities = players[i].getCapturedCities();
-
-    //             // Check if player has captured 5 cities
-    //             if (capturedCities.size() >= 5)
-    //             {
-    //                 cout << "Player " << players[i].getName() << " has captured 5 cities and wins the game!" << endl;
-    //                 return true;
-    //             }
-
-    //             // Check if player has captured all nearby cities for any captured city
-    //             for (const auto &city : capturedCities)
-    //             {
-    //                 const vector<string> &nearbyCities = map.getNearbyCities(city);
-    //                 bool hasCapturedAllNearbyCities = true;
-
-    //                 for (const auto &nearbyCity : nearbyCities)
-    //                 {
-    //                     if (find(capturedCities.begin(), capturedCities.end(), nearbyCity) == capturedCities.end())
-    //                     {
-    //                         hasCapturedAllNearbyCities = false;
-    //                         break;
-    //                     }
-    //                 }
-
-    //                 if (hasCapturedAllNearbyCities)
-    //                 {
-    //                     cout << "Player " << players[i].getName() << " has captured all nearby cities and wins the game!" << endl;
-    //                     return true;
-    //                 }
-    //             }
-    //         }
-    //     }
-
-    //     cout << "No player has met the winning conditions yet." << endl;
-    //     return false;
-    // }
-
     bool checkTheGameEndsOrNot(vector<Player> &players, CityMap &map)
     {
         for (int i = 0; i < players.size(); ++i)
