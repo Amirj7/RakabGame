@@ -36,6 +36,21 @@ public:
         }
     }
 
+    void findAndRemoveBiggestCard(std::vector<Player> &p)
+    {
+        Player temp = p[0];
+
+        for (int i{}; i < p.size(); i++)
+        {
+            if (temp.getBiggestYellowCard() <= p[i].getBiggestYellowCard())
+            {
+                temp = p[i];
+                std::string biggestCard = "yellow" + std::to_string(p[i].getBiggestYellowCard());
+                temp.setTotalScore(-temp.getBiggestYellowCard());
+            }
+        }
+    }
+
     bool isYellow(std::string c)
     {
         int isthere = c.find("yellow");
@@ -231,6 +246,22 @@ public:
                             {
                                 season = 1;
                                 p[i].popBackCardsInhand(choice);
+                            }
+                            else if (choice == "shirzan")
+                            {
+                                p[i].popBackCardsInhand(choice);
+                            }
+                            else if (choice == "rish sefid")
+                            {
+                                p[i].popBackCardsInhand(choice);
+                                findAndRemoveBiggestCard(p);
+                            }
+                            else if (choice == "parchamdar")
+                            {
+                                p[i].popBackCardsInhand(choice);
+                                p[i].setPass(true);
+                                calculatePlayersScore(p);
+                                return;
                             }
                             else if (choice == "matarsak")
                             {

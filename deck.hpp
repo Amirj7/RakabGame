@@ -14,6 +14,9 @@
 #include "winter.hpp"
 #include "tablzan.hpp"
 #include "matarsak.hpp"
+#include "shirzan.hpp"
+#include "RishSefid.hpp"
+#include "parchamdar.hpp"
 
 class Deck
 {
@@ -95,6 +98,24 @@ class Deck
                 cardsInDeck.push_back("tablzan");
             }
 
+            Shirzan p;
+            for(int i{}; i < p.getNumOfCard(); i++)
+            {
+                cardsInDeck.push_back("shirzan");
+            }
+
+            rishSefid R;
+            for(int i{}; i < R.getNumOfCard(); i++)
+            {
+                cardsInDeck.push_back("rishsefid");
+            }
+
+            parchamdar k;
+            for(int i{}; i < k.getNumOfCard(); i++)
+            {
+                cardsInDeck.push_back("parchamdar");
+            }
+            
             shuffleDeck();
         }
     
