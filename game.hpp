@@ -206,16 +206,27 @@ public:
             }
             battle.setNeshanJang(province);
 
-            int goodluck;
+            int goodLuck;
             std::cout << temp.getName() << " please choose a goodluck number: ";
-            std::cin >> goodluck;
-            while (goodluck < 10)
+            std::cin >> goodLuck;
+            while (goodLuck < 10 || goodLuck >= 100)
             {
-                std::cout << "your number should be bigger than 9!" << std::endl
+                std::cout << "your number should be between 10 and 99!" << std::endl
                           << "please choose another number: ";
-                std::cin >> goodluck;
+                std::cin >> goodLuck;
             }
-            battle.setGoodLuckNum(goodluck);
+            battle.setGoodLuckNum(goodLuck);
+
+            int badLuck;
+            std::cout << temp.getName() << " please choose a badluck number: ";
+            std::cin >> badLuck;
+            while (badLuck < 10 || badLuck >= 100)
+            {
+                std::cout << "your number should be between 10 and 99!" << std::endl
+                          << "please choose another number: ";
+                std::cin >> badLuck;
+            }
+            battle.setBadLuckNum(badLuck);
 
             round++;
         }
@@ -250,14 +261,25 @@ public:
                     int goodluck;
                     std::cout << players[i].getName() << " please choose a goodluck number: ";
                     std::cin >> goodluck;
-                    while (goodluck < 10)
+                    while (goodluck < 10 || goodluck >= 100)
                     {
-                        std::cout << "your number should be bigger than 9!" << std::endl
+                        std::cout << "your number should be between 10 and 99!" << std::endl
                                   << "please choose another number: ";
                         std::cin >> goodluck;
                     }
                     battle.setGoodLuckNum(goodluck);
-                    
+
+                    int badLuck;
+                    std::cout << players[i].getName() << " please choose a badluck number: ";
+                    std::cin >> badLuck;
+                    while (badLuck < 10 || badLuck >= 100)
+                    {
+                        std::cout << "your number should be between 10 and 99!" << std::endl
+                                  << "please choose another number: ";
+                        std::cin >> badLuck;
+                    }
+                    battle.setBadLuckNum(badLuck);
+
                     round++;
                     break;
                 }

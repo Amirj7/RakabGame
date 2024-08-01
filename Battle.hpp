@@ -326,6 +326,10 @@ public:
                 {
                     p[i].setTotalScore(p[i].getTotalScore());
                 }
+                if(p[i].getTotalScore() % badLuckNum == 0)
+                {
+                    p[i].setTotalScore(p[i].getTotalScore() * -1);
+                }
             }
             else if (season == 1)
             {
@@ -341,6 +345,10 @@ public:
                 {
                     p[i].setTotalScore(p[i].getTotalScore());
                 }
+                if(p[i].getTotalScore() % badLuckNum == 0)
+                {
+                    p[i].setTotalScore(p[i].getTotalScore() * -1);
+                }
             }
             else
             {
@@ -348,6 +356,10 @@ public:
                 if(p[i].getTotalScore() % goodLuckNum == 0)
                 {
                     p[i].setTotalScore(p[i].getTotalScore());
+                }
+                if(p[i].getTotalScore() % badLuckNum == 0)
+                {
+                    p[i].setTotalScore(p[i].getTotalScore() * -1);
                 }
             }
 
