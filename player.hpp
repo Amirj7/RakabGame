@@ -6,7 +6,7 @@
 class Player
 {
 public:
-    Player(std::string n, int a, std::string c, std::vector<std::string> h)
+    Player(std::string n, int a, std::string c, std::vector<std::string> h={})
     {
         setName(n);
         setAge(a);
@@ -20,7 +20,7 @@ public:
     {
         name = n;
     }
-    std::string getName()
+    std::string getName() const
     {
         return name;
     }
@@ -29,7 +29,7 @@ public:
     {
         age = a;
     }
-    int getAge()
+    int getAge() const
     {
         return age;
     }
@@ -38,7 +38,7 @@ public:
     {
         color = c;
     }
-    std::string getColor()
+    std::string getColor() const
     {
         return color;
     }
@@ -47,7 +47,7 @@ public:
     {
         cardsInHand = c;
     }
-    std::vector<std::string> getCardsInHand()
+    std::vector<std::string> getCardsInHand() const
     {
         return cardsInHand;
     }
@@ -60,7 +60,7 @@ public:
     {
         winner = w;
     }
-    bool getWinnerForNeshanJang()
+    bool getWinnerForNeshanJang() const
     {
         return winner;
     }
@@ -69,7 +69,7 @@ public:
     {
         pass = p;
     }
-    bool getPass()
+    bool getPass() const
     {
         return pass;
     }
@@ -78,7 +78,7 @@ public:
     {
         yellowCardsOnTable.push_back(y);
     }
-    std::vector<std::string> getYellowCardsOnTable()
+    std::vector<std::string> getYellowCardsOnTable() const
     {
         return yellowCardsOnTable;
     }
@@ -87,7 +87,7 @@ public:
     {
         purpleCardsOnTable.push_back(p);
     }
-    std::vector<std::string> getPurpleCardsOnTable()
+    std::vector<std::string> getPurpleCardsOnTable() const
     {
         return purpleCardsOnTable;
     }
@@ -122,7 +122,7 @@ public:
         totalScore += tScore;
     }
 
-    int getTotalScore()
+    int getTotalScore() const
     {
         return totalScore;
     }
@@ -132,7 +132,7 @@ public:
         yellowCardsScore = yellowCardsScore + a;
     }
 
-    int getYellowScore()
+    int getYellowScore() const
     {
         return yellowCardsScore;
     }
@@ -142,7 +142,7 @@ public:
         capturedCities.push_back(c);
     }
 
-    std::vector<std::string> getCapturedCities()
+    std::vector<std::string> getCapturedCities() const
     {
         return capturedCities;
     }
@@ -152,11 +152,25 @@ public:
         biggestYellowCard = b;
     }
 
-    int getBiggestYellowCard()
+    int getBiggestYellowCard() const
     {
         return biggestYellowCard;
     }
 
+    void decreaseScore(int amount)
+    {
+        totalScore -= amount;
+    }
+
+    void setPlayerPlayedRishsefidOrNot(bool f)
+    {
+        rishSefidPlayed = f;
+    }
+
+    bool getPlayerPlayedRishsefidOrNot() const
+    {
+        return rishSefidPlayed;
+    }
 private:
     std::string name;
     int age;
@@ -170,4 +184,8 @@ private:
     int yellowCardsScore;
     std::vector<std::string> capturedCities;
     int biggestYellowCard;
+    bool rishSefidPlayed = true;
+    int initialScore;
+    int finalScore;
+    std::vector<int> yellowCardScores;
 };

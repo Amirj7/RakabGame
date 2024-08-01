@@ -5,20 +5,43 @@
 #include "battle.hpp"
 #include "player.hpp"
 #include "deck.hpp"
+#include <fstream>
 
 class Game
 {
 public:
     Game()
     {
-        startGame();
+        char choice;
+        std::cout << "Do you want to load the previous game ? (y/n)";
+        std::cin >> choice;
+        if (choice == 'y' || choice == 'Y')
+        {
+            if (loadGame())
+            {
+                std::cout << "Let's continue our war!!" << std::endl;
+                continueGame();
+            }
+            else
+            {
+                std::cout << "Failed to load the game. Starting a new war..." << std::endl;
+                startGame();
+            }
+        }
+        else
+        {
+            startGame();
+        }
     }
 
     void startGame()
     {
         welcomeAndGetNumberOfPlayers();
         setPlayersInVector();
-
+        continueGame();
+    }
+      void continueGame()
+    {
         while (true)
         {
             playRound();
@@ -26,8 +49,17 @@ public:
             {
                 break;
             }
+            char saveChoice;
+            std::cout << "Do you want to save the game and exit? (y/n): ";
+            std::cin >> saveChoice;
+            if (saveChoice == 'y' || saveChoice == 'Y')
+            {
+                saveGame();
+                exit(0); // Exit the program
+            }
         }
     }
+
     void playRound()
     {
         specifyTheRound();
@@ -35,11 +67,11 @@ public:
         battle.startBattle(players);
         battle.setPlayersNameForSpring(players); // before calculating the score, spring should be checked
         battle.calculatePlayersScore(players);
-        std::cout << battle.checkWinnerOfTheRound(players , city) << std::endl;
+        std::cout << battle.checkWinnerOfTheRound(players, city) << std::endl;
 
         for (int i{}; i < players.size(); i++) // just for debug
         {
-            std::cout << players[i].getName() << " : " << players[i].getTotalScore() <<  std::endl;
+            std::cout << players[i].getName() << " : " << players[i].getTotalScore() << std::endl;
         }
         char ch = getch();
     }
@@ -101,7 +133,7 @@ public:
         for (int i{}; i < numOfPlayers; i++)
         {
             std::string name;
-            std::cout << "Player" << i + 1 << " please entre your name: ";
+            std::cout << "Player" << i + 1 << " please enter your name: ";
             std::cin >> name;
 
             int age;
@@ -209,12 +241,107 @@ public:
         }
     }
 
-private:
-    std::string city;
-    CityMap GameMap;
-    int numOfPlayers;
-    std::vector<Player> players;
-    Deck deck;
-    Battle battle;
-    int round = 1;
-};
+    void saveGame()
+    {
+        std::ofstream file("game_save.txt");
+        if (file.is_open())
+        {
+            file << round << '\n';
+            file << numOfPlayers << '\n';
+            file << city << '\n';
+            for (const auto &player : players)
+            {
+                file << player.getName() << ' ' << player.getAge() << ' ' << player.getColor() << '\n';
+                for (const auto &card : player.getCardsInHand())
+                {
+                    file << card << ' ';
+                }
+                file << "|\n";
+                for (const auto &yellowCard : player.getYellowCardsOnTable())
+                {
+                    file << yellowCard << ' ';
+                }
+                file << "|\n";
+                for (const auto &purpleCard : player.getPurpleCardsOnTable())
+                {
+                    file << purpleCard << ' ';
+                }
+                file << "|\n";
+                for (const auto &city : player.getCapturedCities())
+                {
+                    file << city << ' ';
+                }
+                file << "|\n";
+                file << player.getTotalScore() << '\n';
+            }
+            file.close();
+        }
+        else
+        {
+            std::cerr << "Unable to open file for saving!" << std::endl;
+        }
+    }
+
+    bool loadGame()
+    {
+        std::ifstream file("game_save.txt");
+        if (file.is_open())
+        {
+            file >> round;
+            file >> numOfPlayers;
+            file >> city;
+            players.clear();
+            for (int i = 0; i < numOfPlayers; i++)
+            {
+                std::string name, color;
+                int age, score;
+                file >> name >> age >> color;
+                Player player(name, age, color);
+
+                std::vector<std::string> cardsInHand;
+                std::string card;
+                while (file >> card && card != "|")
+                {
+                    cardsInHand.push_back(card);
+                }
+                player.setCardsInHand(cardsInHand);
+
+                while (file >> card && card != "|")
+                {
+                    player.setYellowCardsOnTable(card);
+                }
+
+                while (file >> card && card != "|")
+                {
+                    player.setPurpleCardsOnTable(card);
+                }
+
+                while (file >> card && card != "|")
+                {
+                    player.setCapturedCities(card);
+                }
+
+                file >> score;
+                player.setTotalScore(score);
+                players.push_back(player);
+            }
+            file.close();
+            return true;
+        }
+        else 
+        {
+            std::cerr << "Unable to open file for loading!" << std::endl;
+            return false;
+        }
+    }
+
+private : 
+std::string city;
+CityMap GameMap;
+int numOfPlayers;
+std::vector<Player> players;
+Deck deck;
+Battle battle;
+int round = 1;
+}
+;

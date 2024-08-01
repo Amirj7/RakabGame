@@ -1,0 +1,21 @@
+2
+3
+BELLA
+a 3 a
+tablzan yellow10 yellow10 yellow10 yellow1 yellow1 yellow3 spring yellow4 |
+yellow10 |
+|
+BELLA |
+10
+b 2 b
+matarsak yellow6 yellow2 yellow1 yellow3 shirzan yellow10 yellow2 yellow3 yellow5 |
+|
+|
+|
+0
+c 1 c
+matarsak yellow1 yellow1 parchamdar tablzan yellow3 tablzan yellow4 yellow6 matarsak |
+|
+|
+|
+0

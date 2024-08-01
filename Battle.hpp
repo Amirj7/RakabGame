@@ -16,39 +16,17 @@ public:
         return neshanJang;
     }
 
-    bool checkPass(std::vector<Player> p)
+    bool checkPass(const std::vector<Player> &p)
     {
         int counter = 0;
-        for (int i{}; i < p.size(); i++)
+        for (const Player &player : p)
         {
-            if (p[i].getPass() == true)
+            if (player.getPass())
             {
                 counter++;
             }
         }
-        if (counter == p.size())
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-
-    void findAndRemoveBiggestCard(std::vector<Player> &p)
-    {
-        Player temp = p[0];
-
-        for (int i{}; i < p.size(); i++)
-        {
-            if (temp.getBiggestYellowCard() <= p[i].getBiggestYellowCard())
-            {
-                temp = p[i];
-                std::string biggestCard = "yellow" + std::to_string(p[i].getBiggestYellowCard());
-                temp.setTotalScore(-temp.getBiggestYellowCard());
-            }
-        }
+        return counter == p.size();
     }
 
     bool isYellow(std::string c)
@@ -87,7 +65,6 @@ public:
                         std::cout << std::endl;
                         std::cin >> choice;
 
-                        // Check if the chosen card is in the player's hand
                         if (std::find(temp.begin(), temp.end(), choice) != temp.end())
                         {
                             validChoice = true;
@@ -101,73 +78,74 @@ public:
                             std::cout << "Invalid choice. Please choose a card from your hand or 'pass'." << std::endl;
                         }
                     }
-                    // if (choice == "HELP")
-                    // {
-                    //     std::cout << "Hello my friend ! if you don't know how this game work don't worry I'm here!" << std::endl;
-                    //     std::cout << "what's wrong ? pls choose your problem : cards / how to play " << std::endl;
-                    //     string help;
-                    //     cin >> help;
-                    //     if (help == "how to play")
-                    //     {
-                    //         std::cout << "The youngest player takes\n"
-                    //                      "the battle marker. He or she\n"
-                    //                      "initiates the first battle and\n"
-                    //                      "takes the first turn of the game.\n\n"
-                    //                      "In Condottiere, players\n"
-                    //                      "compete in numerous battles\n"
-                    //                      "over the different regions\n"
-                    //                      "of the board. In each battle,\n"
-                    //                      "players fight over a contested\n"
-                    //                      "region, taking turns playing cards to increase\n"
-                    //                      "their strength and trigger special effects.\n\n"
-                    //                      "At the end of each battle, the player who has\n"
-                    //                      "the highest strength based on the cards he or\n"
-                    //                      "she played wins the battle and gains control\n"
-                    //                      "of the contested region. The game ends when\n"
-                    //                      "a single player controls either three adjacent\n"
-                    //                      "regions or a total of five regions anywhere\n"
-                    //                      "on the board.\n\n"
-                    //                      "Player turns are taken in clockwise order\n"
-                    //                      "starting with the player who initiated the\n"
-                    //                      "battle. When you take your turn, you can\n"
-                    //                      "choose to either play a card or pass.\n"
-                    //                      "If you do not wish to play a card, or if you\n"
-                    //                      "are out of cards, you pass. For the rest of this\n"
-                    //                      "battle, you cannot play any more cards, and\n"
-                    //                      "your turn is skipped.\n\n"
-                    //                      "Any cards you already played during the\n"
-                    //                      "battle stay in your row, and their values and\n"
-                    //                      "effects still apply; regardless of when you\n"
-                    //                      "pass, you can still have the highest strength at\n"
-                    //                      "the end of the battle.\n\n"
-                    //                      "If all players except you have passed, you can\n"
-                    //                      "take as many consecutive turns as you wish,\n"
-                    //                      "playing cards until you also pass.\n\n"
-                    //                      "Players compare the strength of their armies,\n"
-                    //                      "and the player with the highest strength\n"
-                    //                      "wins the battle. The winner gains control of\n"
-                    //                      "the contested region, placing one of his or\n"
-                    //                      "her control markers in it. The winner also\n"
-                    //                      "takes the battle marker (and will initiate the\n"
-                    //                      "next battle).\n\n"
-                    //                      "If there is a tie for highest strength, no one\n"
-                    //                      "wins the battle, and a control marker is not\n"
-                    //                      "placed. Randomly decide among the tied\n"
-                    //                      "players who takes the battle marker.\n\n"
-                    //                      "Note that the Spy special card can change\n"
-                    //                      "who takes the battle marker."
-                    //                   << std::endl;
-                    //     }
-                    //     if (help == "cards")
-                    //     {
-                    //         std::cout << "Drummer: When a Drummer card is played, the hand of the player who played it is doubled. Note that only yellow cards are doubled, and purple cards remain unchanged.\n\n"
-                    //         "Winter: When this card is played, all the scores obtained by players through yellow cards are converted to 1. For example, if you play 3 cards with different scores, you will have three scores of 1. The effect of Winter does not disappear until someone plays Spring and it remains until the end of that round.\n\n"
-                    //         "Spring: When Spring is played, the effect of Winter disappears, and the largest yellow card played in the entire game gains an additional 3 points, even if that card is not yours.\n\n"
-                    //         "Scarecrow: When you play a Scarecrow, you can pick up one of your cards from the ground. After this action, the Scarecrow card is discarded.\n\n"
-                    //         "Princess: This card has 10 points and is not affected by Winter, Spring, or any other special cards."
-                    //         << std::endl;
-                    //     }
-                    // }
+                    if (choice == "HELP")
+                    {
+                        std::cout << "Hello my friend ! if you don't know how this game work don't worry I'm here!" << std::endl;
+                        std::cout << "what's wrong ? pls choose your problem : cards / how to play " << std::endl;
+                        string help;
+                        cin >> help;
+                        if (help == "how to play")
+                        {
+                            std::cout << "The youngest player takes\n"
+                                         "the battle marker. He or she\n"
+                                         "initiates the first battle and\n"
+                                         "takes the first turn of the game.\n\n"
+                                         "In Condottiere, players\n"
+                                         "compete in numerous battles\n"
+                                         "over the different regions\n"
+                                         "of the board. In each battle,\n"
+                                         "players fight over a contested\n"
+                                         "region, taking turns playing cards to increase\n"
+                                         "their strength and trigger special effects.\n\n"
+                                         "At the end of each battle, the player who has\n"
+                                         "the highest strength based on the cards he or\n"
+                                         "she played wins the battle and gains control\n"
+                                         "of the contested region. The game ends when\n"
+                                         "a single player controls either three adjacent\n"
+                                         "regions or a total of five regions anywhere\n"
+                                         "on the board.\n\n"
+                                         "Player turns are taken in clockwise order\n"
+                                         "starting with the player who initiated the\n"
+                                         "battle. When you take your turn, you can\n"
+                                         "choose to either play a card or pass.\n"
+                                         "If you do not wish to play a card, or if you\n"
+                                         "are out of cards, you pass. For the rest of this\n"
+                                         "battle, you cannot play any more cards, and\n"
+                                         "your turn is skipped.\n\n"
+                                         "Any cards you already played during the\n"
+                                         "battle stay in your row, and their values and\n"
+                                         "effects still apply; regardless of when you\n"
+                                         "pass, you can still have the highest strength at\n"
+                                         "the end of the battle.\n\n"
+                                         "If all players except you have passed, you can\n"
+                                         "take as many consecutive turns as you wish,\n"
+                                         "playing cards until you also pass.\n\n"
+                                         "Players compare the strength of their armies,\n"
+                                         "and the player with the highest strength\n"
+                                         "wins the battle. The winner gains control of\n"
+                                         "the contested region, placing one of his or\n"
+                                         "her control markers in it. The winner also\n"
+                                         "takes the battle marker (and will initiate the\n"
+                                         "next battle).\n\n"
+                                         "If there is a tie for highest strength, no one\n"
+                                         "wins the battle, and a control marker is not\n"
+                                         "placed. Randomly decide among the tied\n"
+                                         "players who takes the battle marker.\n\n"
+                                         "Note that the Spy special card can change\n"
+                                         "who takes the battle marker."
+                                      << std::endl;
+                        }
+                        if (help == "cards")
+                        {
+                            std::cout << "Drummer: When a Drummer card is played, the hand of the player who played it is doubled. Note that only yellow cards are doubled, and purple cards remain unchanged.\n\n"
+                                         "Winter: When this card is played, all the scores obtained by players through yellow cards are converted to 1. For example, if you play 3 cards with different scores, you will have three scores of 1. The effect of Winter does not disappear until someone plays Spring and it remains until the end of that round.\n\n"
+                                         "Spring: When Spring is played, the effect of Winter disappears, and the largest yellow card played in the entire game gains an additional 3 points, even if that card is not yours.\n\n"
+                                         "Scarecrow: When you play a Scarecrow, you can pick up one of your cards from the ground. After this action, the Scarecrow card is discarded.\n\n"
+                                         "Princess: This card has 10 points and is not affected by Winter, Spring, or any other special cards."
+                                      << std::endl;
+                        }
+                    }
+
                     if (choice == "pass")
                     {
                         p[i].setPass(true);
@@ -251,10 +229,11 @@ public:
                             {
                                 p[i].popBackCardsInhand(choice);
                             }
-                            else if (choice == "rish sefid")
+                            else if (choice == "rishsefid")
                             {
                                 p[i].popBackCardsInhand(choice);
-                                findAndRemoveBiggestCard(p);
+                                p[i].setPlayerPlayedRishsefidOrNot(false);
+                                std::cout << p[i].getPlayerPlayedRishsefidOrNot() << " here" << std::endl;
                             }
                             else if (choice == "parchamdar")
                             {
@@ -320,46 +299,72 @@ public:
 
     void calculatePlayersScore(std::vector<Player> &p)
     {
-        // calculate purplecards score
-        for (int i{}; i < p.size(); i++)
+        int biggestYellowCard = -1; // Initialize to a small value
+        Player *playerWithBiggestYellowCard = nullptr;
+
+        // Calculate the base scores and find the biggest yellow card
+        for (int i = 0; i < p.size(); i++)
         {
             int tablzan = 1;
             std::vector<std::string> temp = p[i].getPurpleCardsOnTable();
-            for (int j{}; j < p[i].getPurpleCardsOnTable().size(); j++) // check the number of each players tablzan
+            for (const auto &card : temp)
             {
-                if (temp[j] == "tablzan")
+                if (card == "tablzan")
                 {
-                    tablzan = tablzan * 2;
+                    tablzan *= 2;
                 }
-            }
-            for (int j{}; j < p[i].getPurpleCardsOnTable().size(); j++) // check the number of each players shahdokht
-            {
-                if (temp[j] == "shahdokht")
+                else if (card == "shahdokht")
                 {
                     p[i].setTotalScore(10);
                 }
             }
 
-            // calculate yellowcards score
             if (season == 0)
             {
-                p[i].setTotalScore(p[i].getYellowCardsOnTable().size() * tablzan); // *tablzan if player had tablzan
+                p[i].setTotalScore(p[i].getYellowCardsOnTable().size() * tablzan);
             }
             else if (season == 1)
             {
                 p[i].setTotalScore(p[i].getYellowScore() * tablzan);
-                for (int j{}; j < p.size(); j++)
+                for (const auto &playerName : playersNameForSpring)
                 {
-                    if (p[i].getName() == playersNameForSpring[j])
+                    if (p[i].getName() == playerName)
                     {
-                        p[i].setTotalScore(3);
+                        p[i].setTotalScore(p[i].getTotalScore() + 3);
                     }
                 }
             }
-            else if (season == 2)
+            else
             {
                 p[i].setTotalScore(p[i].getYellowScore() * tablzan);
             }
+
+            // Find the player with the biggest yellow card
+            if (p[i].getBiggestYellowCard() > biggestYellowCard)
+            {
+                biggestYellowCard = p[i].getBiggestYellowCard();
+                playerWithBiggestYellowCard = &p[i];
+                std::cout << playerWithBiggestYellowCard->getName() << std::endl;
+            }
+
+            // Check and apply Rish Sefid effect if the player played it
+        }
+         std::clog << "--- Test begin ---" << std::endl;
+        for (int i = 0; i < p.size(); i++)
+        {
+                std::clog << "Name: " << p[i].getName() << std::endl;
+                std::clog<< "Bishop: " <<  p[i].getPlayerPlayedRishsefidOrNot()<<std::endl;
+                if (p[i].getPlayerPlayedRishsefidOrNot() == true)
+                {
+                    std::clog<< "--- Entering to first if statement! ---";
+                    if (playerWithBiggestYellowCard != nullptr)
+                    {
+                        std::clog<< "--- Entering to second if statement! ---";
+                        playerWithBiggestYellowCard->decreaseScore(biggestYellowCard);
+                        std::clog << "Rish Sefid effect applied." << std::endl;
+                        p[i].setPlayerPlayedRishsefidOrNot(false);
+                    }
+                }
         }
     }
 
@@ -368,7 +373,6 @@ public:
         if (players.empty())
             return "";
 
-        // Initialize temp with the first player
         Player *temp = &players[0];
 
         for (Player &player : players)
@@ -378,14 +382,14 @@ public:
                 temp = &player;
             }
         }
-        // Set the winner attributes for the player with the highest score
+
         temp->setWinnerForNeshanJang(true);
         temp->setCapturedCities(neshanJang);
 
         return temp->getName();
     }
 
-    void setPlayersNameForSpring(std::vector<Player> &p) // func for fill playersNameForSpring vector
+    void setPlayersNameForSpring(std::vector<Player> &p)
     {
         Player temp = p[0];
         int index = 0;
@@ -506,8 +510,8 @@ public:
     }
 
 private:
-    std::vector<std::string> playersNameForSpring; // A vector to keep the names of the players that have the largest card in the game
-    int season = 2;                                // spring = 1 / winter = 0
+    std::vector<std::string> playersNameForSpring;
+    int season = 2;
     std::string neshanJang;
     int round = 1;
 };
