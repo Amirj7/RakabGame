@@ -40,7 +40,7 @@ public:
         setPlayersInVector();
         continueGame();
     }
-      void continueGame()
+    void continueGame()
     {
         while (true)
         {
@@ -205,6 +205,18 @@ public:
                 }
             }
             battle.setNeshanJang(province);
+
+            int goodluck;
+            std::cout << temp.getName() << " please choose a goodluck number: ";
+            std::cin >> goodluck;
+            while (goodluck < 10)
+            {
+                std::cout << "your number should be bigger than 9!" << std::endl
+                          << "please choose another number: ";
+                std::cin >> goodluck;
+            }
+            battle.setGoodLuckNum(goodluck);
+
             round++;
         }
         else
@@ -234,6 +246,18 @@ public:
                     }
                     battle.setNeshanJang(province);
                     city = province;
+
+                    int goodluck;
+                    std::cout << players[i].getName() << " please choose a goodluck number: ";
+                    std::cin >> goodluck;
+                    while (goodluck < 10)
+                    {
+                        std::cout << "your number should be bigger than 9!" << std::endl
+                                  << "please choose another number: ";
+                        std::cin >> goodluck;
+                    }
+                    battle.setGoodLuckNum(goodluck);
+                    
                     round++;
                     break;
                 }
@@ -328,20 +352,19 @@ public:
             file.close();
             return true;
         }
-        else 
+        else
         {
             std::cerr << "Unable to open file for loading!" << std::endl;
             return false;
         }
     }
 
-private : 
-std::string city;
-CityMap GameMap;
-int numOfPlayers;
-std::vector<Player> players;
-Deck deck;
-Battle battle;
-int round = 1;
-}
-;
+private:
+    std::string city;
+    CityMap GameMap;
+    int numOfPlayers;
+    std::vector<Player> players;
+    Deck deck;
+    Battle battle;
+    int round = 1;
+};

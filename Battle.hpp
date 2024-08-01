@@ -322,6 +322,10 @@ public:
             if (season == 0)
             {
                 p[i].setTotalScore(p[i].getYellowCardsOnTable().size() * tablzan);
+                if(p[i].getTotalScore() % goodLuckNum == 0)
+                {
+                    p[i].setTotalScore(p[i].getTotalScore());
+                }
             }
             else if (season == 1)
             {
@@ -333,10 +337,18 @@ public:
                         p[i].setTotalScore(p[i].getTotalScore() + 3);
                     }
                 }
+                if(p[i].getTotalScore() % goodLuckNum == 0)
+                {
+                    p[i].setTotalScore(p[i].getTotalScore());
+                }
             }
             else
             {
                 p[i].setTotalScore(p[i].getYellowScore() * tablzan);
+                if(p[i].getTotalScore() % goodLuckNum == 0)
+                {
+                    p[i].setTotalScore(p[i].getTotalScore());
+                }
             }
 
             // Find the player with the biggest yellow card
@@ -510,9 +522,21 @@ public:
         return false;
     }
 
+
+    void setGoodLuckNum(int n)
+    {
+        goodLuckNum = n;
+    }
+
+    void setBadLuckNum(int n)
+    {
+        badLuckNum = n;
+    }
 private:
     std::vector<std::string> playersNameForSpring;
     int season = 2;
     std::string neshanJang;
     int round = 1;
+    int goodLuckNum;
+    int badLuckNum;
 };
