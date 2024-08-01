@@ -183,8 +183,8 @@ private:
     int totalScore;
     int yellowCardsScore;
     std::vector<std::string> capturedCities;
-    int biggestYellowCard;
-    bool rishSefidPlayed = true;
+    int biggestYellowCard = 0;
+    bool rishSefidPlayed = false;
     int initialScore;
     int finalScore;
     std::vector<int> yellowCardScores;

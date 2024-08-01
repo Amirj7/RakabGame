@@ -232,14 +232,14 @@ public:
                             else if (choice == "rishsefid")
                             {
                                 p[i].popBackCardsInhand(choice);
-                                p[i].setPlayerPlayedRishsefidOrNot(false);
-                                std::cout << p[i].getPlayerPlayedRishsefidOrNot() << " here" << std::endl;
+                                p[i].setPlayerPlayedRishsefidOrNot(true);
+                                //std::cout << p[i].getPlayerPlayedRishsefidOrNot() << " here" << std::endl;
                             }
                             else if (choice == "parchamdar")
                             {
                                 p[i].popBackCardsInhand(choice);
                                 p[i].setPass(true);
-                                calculatePlayersScore(p);
+                                // calculatePlayersScore(p);
                                 return;
                             }
                             else if (choice == "matarsak")
@@ -311,7 +311,7 @@ public:
             {
                 if (card == "tablzan")
                 {
-                    tablzan *= 2;
+                    tablzan *= 1.5;
                 }
                 else if (card == "shahdokht")
                 {
@@ -344,24 +344,25 @@ public:
             {
                 biggestYellowCard = p[i].getBiggestYellowCard();
                 playerWithBiggestYellowCard = &p[i];
-                std::cout << playerWithBiggestYellowCard->getName() << std::endl;
+                //std::cout << playerWithBiggestYellowCard->getName() << std::endl;
             }
 
             // Check and apply Rish Sefid effect if the player played it
         }
-         std::clog << "--- Test begin ---" << std::endl;
+
+        //std::clog << "--- Test begin ---" << std::endl;
         for (int i = 0; i < p.size(); i++)
         {
-                std::clog << "Name: " << p[i].getName() << std::endl;
-                std::clog<< "Bishop: " <<  p[i].getPlayerPlayedRishsefidOrNot()<<std::endl;
+               // std::clog << "Name: " << p[i].getName() << std::endl;
+                //std::clog<< "Bishop: " <<  p[i].getPlayerPlayedRishsefidOrNot()<<std::endl;
                 if (p[i].getPlayerPlayedRishsefidOrNot() == true)
                 {
-                    std::clog<< "--- Entering to first if statement! ---";
+                    // std::clog<< "--- Entering to first if statement! ---";
                     if (playerWithBiggestYellowCard != nullptr)
                     {
-                        std::clog<< "--- Entering to second if statement! ---";
+                        //std::clog<< "--- Entering to second if statement! ---";
                         playerWithBiggestYellowCard->decreaseScore(biggestYellowCard);
-                        std::clog << "Rish Sefid effect applied." << std::endl;
+                        //std::clog << "Rish Sefid effect applied." << std::endl;
                         p[i].setPlayerPlayedRishsefidOrNot(false);
                     }
                 }
