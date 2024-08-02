@@ -24,7 +24,8 @@ public:
         nearbyCities["ARMENTO"] = {"MORINA", "OLIVADI", "ENNA", "TALMONE"};
         nearbyCities["ENNA"] = {"OLIVADI", "ARMENTO"};
         nearbyCities["ELINIA"] = {"ROLLO", "TALMONE"};
-        nearbyCities["ATHENS"] = {"ATELA", "DIMASE"};
+        nearbyCities["ATHENS"] = {"ATELA", "DIMASE"}; // new city added to the game
+        // enna va lia jabeja shodan 
     }
 
     vector<string> getNearbyCities(string city)

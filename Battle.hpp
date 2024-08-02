@@ -306,21 +306,20 @@ public:
         for (int i = 0; i < p.size(); i++)
         {
             int tablzan = 1;
-            int shahdokht = 0;
             std::vector<std::string> temp = p[i].getPurpleCardsOnTable();
             for (const auto &card : temp)
             {
                 if (card == "tablzan")
                 {
-                    tablzan *= 1.5;
+                    tablzan *= 1.5; // new tablzan (faze 3)
                 }
                 else if (card == "shahdokht")
                 {
                     p[i].setTotalScore(10);
-                    shahdokht += 1;
                 }
             }
 
+            // goodluck and badluck numbers added to all seasons
             if (season == 0)
             {
                 p[i].setTotalScore(p[i].getYellowCardsOnTable().size() * tablzan);
@@ -419,6 +418,7 @@ public:
 
     void setPlayersNameForSpring(std::vector<Player> &p)
     {
+        //beautiful spring for shahdokht added
         bool itIs = false;
         int counter;
         for (int i{}; i < p.size(); i++)
@@ -578,11 +578,11 @@ public:
         return false;
     }
 
+    //setter func for goodluck and badluck numbers
     void setGoodLuckNum(int n)
     {
         goodLuckNum = n;
     }
-
     void setBadLuckNum(int n)
     {
         badLuckNum = n;
