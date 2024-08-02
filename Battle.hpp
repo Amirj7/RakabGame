@@ -322,7 +322,39 @@ public:
             // goodluck and badluck numbers added to all seasons
             if (season == 0)
             {
-                p[i].setTotalScore(p[i].getYellowCardsOnTable().size() * tablzan);
+                // p[i].setTotalScore(p[i].getYellowCardsOnTable().size() * tablzan);
+
+                int sum = 0;
+                for(const auto &card : p[i].getYellowCardsOnTable())
+                {
+                    //yellow1 nemikhad chon bar 2 taghsim she kafesh mishe 0
+                    if(card == "yellow2")
+                    {
+                        sum += 1;
+                    }
+                    else if(card == "yellow3")
+                    {
+                        sum += 1;
+                    }
+                    else if(card == "yellow4")
+                    {
+                        sum += 2;
+                    }
+                    else if(card == "yellow5")
+                    {
+                        sum += 2;
+                    }
+                    else if(card == "yellow6")
+                    {
+                        sum += 3;
+                    }
+                    else if(card == "yellow10")
+                    {
+                        sum += 5;
+                    }
+                }
+                p[i].setTotalScore(sum * tablzan);
+
                 if (p[i].getTotalScore() % goodLuckNum == 0)
                 {
                     p[i].setTotalScore(p[i].getTotalScore());
