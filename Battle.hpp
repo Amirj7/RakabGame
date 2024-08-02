@@ -233,7 +233,7 @@ public:
                             {
                                 p[i].popBackCardsInhand(choice);
                                 p[i].setPlayerPlayedRishsefidOrNot(true);
-                                //std::cout << p[i].getPlayerPlayedRishsefidOrNot() << " here" << std::endl;
+                                // std::cout << p[i].getPlayerPlayedRishsefidOrNot() << " here" << std::endl;
                             }
                             else if (choice == "parchamdar")
                             {
@@ -306,6 +306,7 @@ public:
         for (int i = 0; i < p.size(); i++)
         {
             int tablzan = 1;
+            int shahdokht = 0;
             std::vector<std::string> temp = p[i].getPurpleCardsOnTable();
             for (const auto &card : temp)
             {
@@ -316,17 +317,18 @@ public:
                 else if (card == "shahdokht")
                 {
                     p[i].setTotalScore(10);
+                    shahdokht += 1;
                 }
             }
 
             if (season == 0)
             {
                 p[i].setTotalScore(p[i].getYellowCardsOnTable().size() * tablzan);
-                if(p[i].getTotalScore() % goodLuckNum == 0)
+                if (p[i].getTotalScore() % goodLuckNum == 0)
                 {
                     p[i].setTotalScore(p[i].getTotalScore());
                 }
-                if(p[i].getTotalScore() % badLuckNum == 0)
+                if (p[i].getTotalScore() % badLuckNum == 0)
                 {
                     p[i].setTotalScore(p[i].getTotalScore() * -1);
                 }
@@ -338,14 +340,15 @@ public:
                 {
                     if (p[i].getName() == playerName)
                     {
-                        p[i].setTotalScore(p[i].getTotalScore() + 3);
+                        p[i].setTotalScore(3);
                     }
                 }
-                if(p[i].getTotalScore() % goodLuckNum == 0)
+
+                if (p[i].getTotalScore() % goodLuckNum == 0)
                 {
                     p[i].setTotalScore(p[i].getTotalScore());
                 }
-                if(p[i].getTotalScore() % badLuckNum == 0)
+                if (p[i].getTotalScore() % badLuckNum == 0)
                 {
                     p[i].setTotalScore(p[i].getTotalScore() * -1);
                 }
@@ -353,11 +356,11 @@ public:
             else
             {
                 p[i].setTotalScore(p[i].getYellowScore() * tablzan);
-                if(p[i].getTotalScore() % goodLuckNum == 0)
+                if (p[i].getTotalScore() % goodLuckNum == 0)
                 {
                     p[i].setTotalScore(p[i].getTotalScore());
                 }
-                if(p[i].getTotalScore() % badLuckNum == 0)
+                if (p[i].getTotalScore() % badLuckNum == 0)
                 {
                     p[i].setTotalScore(p[i].getTotalScore() * -1);
                 }
@@ -368,28 +371,28 @@ public:
             {
                 biggestYellowCard = p[i].getBiggestYellowCard();
                 playerWithBiggestYellowCard = &p[i];
-                //std::cout << playerWithBiggestYellowCard->getName() << std::endl;
+                // std::cout << playerWithBiggestYellowCard->getName() << std::endl;
             }
 
             // Check and apply Rish Sefid effect if the player played it
         }
 
-        //std::clog << "--- Test begin ---" << std::endl;
+        // std::clog << "--- Test begin ---" << std::endl;
         for (int i = 0; i < p.size(); i++)
         {
-               // std::clog << "Name: " << p[i].getName() << std::endl;
-                //std::clog<< "Bishop: " <<  p[i].getPlayerPlayedRishsefidOrNot()<<std::endl;
-                if (p[i].getPlayerPlayedRishsefidOrNot() == true)
+            // std::clog << "Name: " << p[i].getName() << std::endl;
+            // std::clog<< "Bishop: " <<  p[i].getPlayerPlayedRishsefidOrNot()<<std::endl;
+            if (p[i].getPlayerPlayedRishsefidOrNot() == true)
+            {
+                // std::clog<< "--- Entering to first if statement! ---";
+                if (playerWithBiggestYellowCard != nullptr)
                 {
-                    // std::clog<< "--- Entering to first if statement! ---";
-                    if (playerWithBiggestYellowCard != nullptr)
-                    {
-                        //std::clog<< "--- Entering to second if statement! ---";
-                        playerWithBiggestYellowCard->decreaseScore(biggestYellowCard);
-                        //std::clog << "Rish Sefid effect applied." << std::endl;
-                        p[i].setPlayerPlayedRishsefidOrNot(false);
-                    }
+                    // std::clog<< "--- Entering to second if statement! ---";
+                    playerWithBiggestYellowCard->decreaseScore(biggestYellowCard);
+                    // std::clog << "Rish Sefid effect applied." << std::endl;
+                    p[i].setPlayerPlayedRishsefidOrNot(false);
                 }
+            }
         }
     }
 
@@ -416,24 +419,65 @@ public:
 
     void setPlayersNameForSpring(std::vector<Player> &p)
     {
-        Player temp = p[0];
-        int index = 0;
+        bool itIs = false;
+        int counter;
         for (int i{}; i < p.size(); i++)
         {
-            if (temp.getBiggestYellowCard() < p[i].getBiggestYellowCard())
+            counter = 0;
+            for (const auto &player : p[i].getPurpleCardsOnTable())
             {
-                temp = p[i];
-                index = i;
-            }
-        }
-        playersNameForSpring.push_back(temp.getName());
-        for (int i{}; i < p.size(); i++)
-        {
-            if (index != i)
-            {
-                if (temp.getBiggestYellowCard() == p[i].getBiggestYellowCard())
+                if (player == "shahdokht" && counter == 0)
                 {
                     playersNameForSpring.push_back(p[i].getName());
+                    counter++;
+                    itIs = true;
+                }
+            }
+        }
+
+        if (itIs == false)
+        {
+            Player temp = p[0];
+            int index = 0;
+            for (int i{}; i < p.size(); i++)
+            {
+                if (temp.getBiggestYellowCard() < p[i].getBiggestYellowCard())
+                {
+                    temp = p[i];
+                    index = i;
+                }
+            }
+            playersNameForSpring.push_back(temp.getName());
+            for (int i{}; i < p.size(); i++)
+            {
+                if (index != i)
+                {
+                    if (temp.getBiggestYellowCard() == p[i].getBiggestYellowCard())
+                    {
+                        playersNameForSpring.push_back(p[i].getName());
+                    }
+                }
+            }
+        }
+
+        if(itIs == true)
+        {
+            for(int i{} ; i < p.size() ; i++)
+            {
+                if(p[i].getBiggestYellowCard() == 10)
+                {
+                    bool YorN = true;
+                    for (const auto &player : playersNameForSpring)
+                    {
+                        if(p[i].getName() == player)
+                        {
+                            YorN = false;
+                        }
+                    }
+                    if(YorN)
+                    {
+                        playersNameForSpring.push_back(p[i].getName());
+                    }
                 }
             }
         }
@@ -534,7 +578,6 @@ public:
         return false;
     }
 
-
     void setGoodLuckNum(int n)
     {
         goodLuckNum = n;
@@ -544,6 +587,7 @@ public:
     {
         badLuckNum = n;
     }
+
 private:
     std::vector<std::string> playersNameForSpring;
     int season = 2;
