@@ -322,8 +322,7 @@ public:
             // goodluck and badluck numbers added to all seasons
             if (season == 0)
             {
-                // p[i].setTotalScore(p[i].getYellowCardsOnTable().size() * tablzan);
-
+                //weak winter added
                 int sum = 0;
                 for(const auto &card : p[i].getYellowCardsOnTable())
                 {
