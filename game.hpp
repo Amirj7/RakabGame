@@ -73,6 +73,7 @@ public:
         {
             std::cout << players[i].getName() << " : " << players[i].getTotalScore() << std::endl;
         }
+        battle.setProvinceChoice(players);
         char ch = getch();
     }
 
@@ -197,11 +198,11 @@ public:
                 city = province;
                 if (GameMap.isValidCity(province))
                 {
-                    break;
+                   break;
                 }
                 else
                 {
-                    std::cout << "Invalid city name. Please enter a valid city name ... " << std::endl;
+                    std::cout << "Invalid city name. Please enter a valid city name: ";
                 }
             }
             battle.setNeshanJang(province);
@@ -246,13 +247,13 @@ public:
                     {
                         std::cout << players[i].getName() << " please choose province for battle: ";
                         std::cin >> province;
-                        if (GameMap.isValidCity(province))
+                        if (GameMap.isValidCity(province) && (province != battle.getProvinceChoice()))
                         {
                             break;
                         }
                         else
                         {
-                            std::cout << "Invalid city name. Please enter a valid city name: ";
+                            std::cout << "OOps! Invalid city name  or you can't choose this city cause of neshane solh. Please enter a valid city name or another city... " << std::endl;
                         }
                     }
                     battle.setNeshanJang(province);

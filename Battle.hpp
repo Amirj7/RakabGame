@@ -234,6 +234,7 @@ public:
                                 p[i].popBackCardsInhand(choice);
                                 p[i].setPlayerPlayedRishsefidOrNot(true);
                                 // std::cout << p[i].getPlayerPlayedRishsefidOrNot() << " here" << std::endl;
+                                p[i].setNeshaneSolh(1);
                             }
                             else if (choice == "parchamdar")
                             {
@@ -299,7 +300,7 @@ public:
 
     void calculatePlayersScore(std::vector<Player> &p)
     {
-        int biggestYellowCard = -1; // Initialize to a small value
+        int biggestYellowCard = 0; // Initialize to a small value
         Player *playerWithBiggestYellowCard = nullptr;
 
         // Calculate the base scores and find the biggest yellow card
@@ -445,6 +446,29 @@ public:
         temp->setCapturedCities(neshanJang);
 
         return temp->getName();
+    }
+
+    void setProvinceChoice(std::vector<Player> &players)
+    {
+        Player *playerWithHighestNeshaneSolh = nullptr;
+        int maxNeshaneSolh = 0;
+
+        for (Player &player : players)
+        {
+            if (player.getNeshaneSolh() > maxNeshaneSolh)
+            {
+                maxNeshaneSolh = player.getNeshaneSolh();
+                playerWithHighestNeshaneSolh = &player;
+            }
+        }
+
+        if (playerWithHighestNeshaneSolh != nullptr)
+        {
+            std::string m;
+            std::cout << playerWithHighestNeshaneSolh->getName() << ", choose a province that the winner cannot select next round: ";
+            std::cin >> m;
+            chosenProvince = m;
+        }
     }
 
     void setPlayersNameForSpring(std::vector<Player> &p)
@@ -619,6 +643,11 @@ public:
         badLuckNum = n;
     }
 
+    std::string& getProvinceChoice() 
+    {
+        return chosenProvince;
+    }
+
 private:
     std::vector<std::string> playersNameForSpring;
     int season = 2;
@@ -626,4 +655,5 @@ private:
     int round = 1;
     int goodLuckNum;
     int badLuckNum;
+    std::string chosenProvince;
 };

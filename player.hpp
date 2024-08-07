@@ -171,6 +171,17 @@ public:
     {
         return rishSefidPlayed;
     }
+
+    void setNeshaneSolh(int Neshan) 
+    {
+        neshaneSolh += Neshan;
+    }
+
+    int getNeshaneSolh() const
+    {
+        return neshaneSolh;
+    }
+
 private:
     std::string name;
     int age;
@@ -187,5 +198,7 @@ private:
     bool rishSefidPlayed = false;
     int initialScore;
     int finalScore;
+    int neshaneSolh = 0;
     std::vector<int> yellowCardScores;
+    std::string restrictedProvince;
 };
