@@ -12,6 +12,7 @@ class Game
 public:
     Game()
     {
+        // check if the player want to continue last game or not
         char choice;
         std::cout << "Do you want to load the previous game ? (y/n)";
         std::cin >> choice;
@@ -40,6 +41,7 @@ public:
         setPlayersInVector();
         continueGame();
     }
+    // check if the player want to save the game and exit or ot
     void continueGame()
     {
         while (true)
@@ -60,6 +62,7 @@ public:
         }
     }
 
+    // start the round
     void playRound()
     {
         specifyTheRound();
@@ -77,38 +80,7 @@ public:
         char ch = getch();
     }
 
-    void display()
-    {
-        for (int i{}; i < players.size(); i++)
-        {
-            std::cout << players[i].getName() << " : ";
-            std::vector<std::string> temp1 = players[i].getYellowCardsOnTable();
-            std::vector<std::string> temp2 = players[i].getPurpleCardsOnTable();
-            for (int j{}; j < players[i].getYellowCardsOnTable().size(); j++)
-            {
-                std::cout << temp1[j] << "  ";
-            }
-            for (int k{}; k < players[i].getPurpleCardsOnTable().size(); k++)
-            {
-                std::cout << temp2[k] << "  ";
-            }
-            std::cout << std::endl;
-        }
-        std::cout << std::endl
-                  << "-----------------------------------------------------------------------------------------" << std::endl;
-        for (int i{}; i < players.size(); i++)
-        {
-            std::cout << players[i].getName() << " : ";
-            std::vector<std::string> temp = players[i].getCapturedCities();
-            for (int j{}; j < players[i].getCapturedCities().size(); j++)
-            {
-                std::cout << temp[j] << "  ";
-            }
-            std::cout << std::endl;
-            std::cout << "--------------------------------------------------------------------------------------------" << std::endl;
-        }
-    }
-
+    // just a beautiful start screen
     void welcomeAndGetNumberOfPlayers()
     {
         std::cout << "***********************************************" << std::endl;
@@ -129,6 +101,7 @@ public:
         }
     }
 
+    // this is for specify the players and get their informations
     void setPlayersInVector()
     {
         for (int i{}; i < numOfPlayers; i++)
@@ -157,6 +130,7 @@ public:
         }
     }
 
+    // this function shows the player cards
     void showPlayersCard()
     {
         for (int i{}; i < players.size(); i++)
@@ -178,6 +152,7 @@ public:
     {
         return round;
     }
+    // this function checks if it is the first round of the game or not
     void specifyTheRound()
     {
         if (round == 1)
@@ -198,14 +173,14 @@ public:
                 city = province;
                 if (GameMap.isValidCity(province))
                 {
-                   break;
+                    break;
                 }
                 else
                 {
                     std::cout << "Invalid city name. Please enter a valid city name: ";
                 }
             }
-            battle.setNeshanJang(province);
+            temp.setNeshanJang(province);
 
             int goodLuck;
             std::cout << temp.getName() << " please choose a goodluck number: ";
@@ -240,14 +215,17 @@ public:
 
             for (int i{}; i < players.size(); i++)
             {
-                if (players[i].getWinnerForNeshanJang())
+                if (players[i + 1].getShirzanCount() > players[i].getShirzanCount())
                 {
-                    std::string province;
+                    Player *playerWithMaxShirzan = nullptr;
+                    playerWithMaxShirzan = &players[i + 1];
+
+                    std::string firstIfProvince;
                     while (true)
                     {
-                        std::cout << players[i].getName() << " please choose province for battle: ";
-                        std::cin >> province;
-                        if (GameMap.isValidCity(province) && (province != battle.getProvinceChoice()))
+                        std::cout << playerWithMaxShirzan->getName() << " please choose province for battle: ";
+                        std::cin >> firstIfProvince;
+                        if (GameMap.isValidCity(firstIfProvince) && (firstIfProvince != battle.getProvinceChoice()))
                         {
                             break;
                         }
@@ -256,8 +234,52 @@ public:
                             std::cout << "OOps! Invalid city name  or you can't choose this city cause of neshane solh. Please enter a valid city name or another city... " << std::endl;
                         }
                     }
-                    battle.setNeshanJang(province);
-                    city = province;
+                    playerWithMaxShirzan->setNeshanJang(firstIfProvince);
+                    city = firstIfProvince;
+
+                    int goodluck;
+                    std::cout << playerWithMaxShirzan->getName() << " please choose a goodluck number: ";
+                    std::cin >> goodluck;
+                    while (goodluck < 10 || goodluck >= 100)
+                    {
+                        std::cout << "your number should be between 10 and 99!" << std::endl
+                                  << "please choose another number: ";
+                        std::cin >> goodluck;
+                    }
+                    battle.setGoodLuckNum(goodluck);
+
+                    int badLuck;
+                    std::cout << playerWithMaxShirzan->getName() << " please choose a badluck number: ";
+                    std::cin >> badLuck;
+                    while (badLuck < 10 || badLuck >= 100)
+                    {
+                        std::cout << "your number should be between 10 and 99!" << std::endl
+                                  << "please choose another number: ";
+                        std::cin >> badLuck;
+                    }
+                    battle.setBadLuckNum(badLuck);
+
+                    round++;
+                    break;
+                }
+                else if (players[i].getWinnerForNeshanJang())
+                {
+                    std::string SecondIfprovince;
+                    while (true)
+                    {
+                        std::cout << players[i].getName() << " please choose province for battle: ";
+                        std::cin >> SecondIfprovince;
+                        if (GameMap.isValidCity(SecondIfprovince) && (SecondIfprovince != battle.getProvinceChoice()))
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            std::cout << "OOps! Invalid city name  or you can't choose this city cause of neshane solh. Please enter a valid city name or another city... " << std::endl;
+                        }
+                    }
+                    players[i].setNeshanJang(SecondIfprovince);
+                    city = SecondIfprovince;
 
                     int goodluck;
                     std::cout << players[i].getName() << " please choose a goodluck number: ";
@@ -288,6 +310,7 @@ public:
         }
     }
 
+    // function to save the game
     void saveGame()
     {
         std::ofstream file("game_save.txt");
@@ -329,6 +352,7 @@ public:
         }
     }
 
+    // function to load the game
     bool loadGame()
     {
         std::ifstream file("game_save.txt");

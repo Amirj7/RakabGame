@@ -182,6 +182,25 @@ public:
         return neshaneSolh;
     }
 
+    void setShirzanCount(int shirzanCount)
+    {
+        shirzanNum += shirzanCount;
+    }
+
+    int getShirzanCount()
+    {
+        return shirzanNum;
+    }
+
+    void setNeshanJang(std::string nj)
+    {
+        neshanJang = nj;
+    }
+    std::string getNeshanJang() const
+    {
+        return neshanJang;
+    }
+
 private:
     std::string name;
     int age;
@@ -199,6 +218,9 @@ private:
     int initialScore;
     int finalScore;
     int neshaneSolh = 0;
+    int shirzanNum = 0;
     std::vector<int> yellowCardScores;
     std::string restrictedProvince;
+    std::string neshanJang;
+
 };

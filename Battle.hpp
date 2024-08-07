@@ -1,21 +1,70 @@
 #pragma once
 #include <iostream>
 #include <map>
+#include <cstdlib>
 #include "map.hpp"
 #include "player.hpp"
 
 class Battle
 {
 public:
-    void setNeshanJang(std::string nj)
+//this function should clear the screen for display function
+    void clearScreen() 
     {
-        neshanJang = nj;
-    }
-    std::string getNeshanJang() const
-    {
-        return neshanJang;
+        #if defined(_WIN32) || defined(_WIN64)
+        system("cls");
+        #else
+        system("clear");
+        #endif
     }
 
+//this function should display each player informations at the top of the terminal
+    void display(std::vector<Player> &p) 
+    {
+        clearScreen(); // Clear the screen before displaying
+        // Display Yellow Cards
+        std::cout << "Yellow Cards:" << std::endl;
+        for (int i{}; i < p.size(); i++) 
+        {
+            std::cout << p[i].getName() << "'s cards : ";
+            std::vector<std::string> temp1 = p[i].getYellowCardsOnTable();
+            for (int j{}; j < p[i].getYellowCardsOnTable().size(); j++)
+            {
+                std::cout << temp1[j] << "  ";
+            }
+            std::cout << std::endl;
+        }
+        std::cout << std::endl << "-----------------------------------------------------------------------------------------" << std::endl;
+
+        // Display Purple Cards
+        std::cout << "Purple Cards:" << std::endl;
+        for (const auto &player : p)
+        {
+            std::cout << player.getName() << "'s cards : ";
+            auto purpleCards = player.getPurpleCardsOnTable();
+            for (const auto &card : purpleCards)
+            {
+                std::cout << card << "  ";
+            }
+            std::cout << std::endl;
+        }
+        std::cout << std::endl << "-----------------------------------------------------------------------------------------" << std::endl;
+
+        for (int i{}; i < p.size(); i++) //fix this
+        {
+            //Display Captured Cities
+            std::cout << p[i].getName() << "'s captured cities : ";
+            std::vector<std::string> temp = p[i].getCapturedCities();
+            for (int j{}; j < p[i].getCapturedCities().size(); j++)
+            {
+                std::cout << temp[j] << "  ";
+            }
+            std::cout << std::endl;
+        }
+        std::cout << std::endl << "-------------------------------------------------------------------------------------------" << std::endl;
+    }
+
+//this function check if the player pass or not
     bool checkPass(const std::vector<Player> &p)
     {
         int counter = 0;
@@ -29,6 +78,7 @@ public:
         return counter == p.size();
     }
 
+//this function checks the card is yellow or not
     bool isYellow(std::string c)
     {
         int isthere = c.find("yellow");
@@ -42,12 +92,14 @@ public:
         }
     }
 
+//this function starts the battle
     void startBattle(std::vector<Player> &p)
     {
         while (checkPass(p) == false)
         {
             for (int i{}; i < p.size(); i++)
             {
+                display(p);
                 if (p[i].getPass() != true)
                 {
                     std::string choice;
@@ -65,7 +117,7 @@ public:
                         std::cout << std::endl;
                         std::cin >> choice;
 
-                        if (std::find(temp.begin(), temp.end(), choice) != temp.end())
+                        if (std::find(temp.begin(), temp.end(), choice) != temp.end())//check if the choice is valid or not
                         {
                             validChoice = true;
                         }
@@ -78,7 +130,7 @@ public:
                             std::cout << "Invalid choice. Please choose a card from your hand or 'pass'." << std::endl;
                         }
                     }
-                    if (choice == "HELP")
+                    if (choice == "HELP") //help 
                     {
                         std::cout << "Hello my friend ! if you don't know how this game work don't worry I'm here!" << std::endl;
                         std::cout << "what's wrong ? pls choose your problem : cards / how to play " << std::endl;
@@ -146,13 +198,13 @@ public:
                         }
                     }
 
-                    if (choice == "pass")
+                    if (choice == "pass") //pass
                     {
                         p[i].setPass(true);
                     }
                     else
                     {
-                        if (isYellow(choice) == true)
+                        if (isYellow(choice) == true)//yellow cards
                         {
                             p[i].setYellowCardsOnTable(choice);
                             p[i].popBackCardsInhand(choice);
@@ -213,24 +265,29 @@ public:
                                 }
                             }
                         }
-                        else
+                        else//purple cards
                         {
                             if (choice == "winter")
                             {
+                                p[i].setPurpleCardsOnTable(choice);
                                 season = 0;
                                 p[i].popBackCardsInhand(choice);
                             }
                             else if (choice == "spring")
                             {
+                                p[i].setPurpleCardsOnTable(choice);
                                 season = 1;
                                 p[i].popBackCardsInhand(choice);
                             }
                             else if (choice == "shirzan")
                             {
+                                p[i].setPurpleCardsOnTable(choice);
                                 p[i].popBackCardsInhand(choice);
+                                p[i].setShirzanCount(1);
                             }
                             else if (choice == "rishsefid")
                             {
+                                p[i].setPurpleCardsOnTable(choice);
                                 p[i].popBackCardsInhand(choice);
                                 p[i].setPlayerPlayedRishsefidOrNot(true);
                                 // std::cout << p[i].getPlayerPlayedRishsefidOrNot() << " here" << std::endl;
@@ -238,6 +295,7 @@ public:
                             }
                             else if (choice == "parchamdar")
                             {
+                                p[i].setPurpleCardsOnTable(choice);
                                 p[i].popBackCardsInhand(choice);
                                 p[i].setPass(true);
                                 // calculatePlayersScore(p);
@@ -245,6 +303,7 @@ public:
                             }
                             else if (choice == "matarsak")
                             {
+                                p[i].setPurpleCardsOnTable(choice);
                                 std::string chosenCard;
                                 std::vector<std::string> temp1 = p[i].getYellowCardsOnTable();
                                 std::vector<std::string> temp2 = p[i].getPurpleCardsOnTable();
@@ -252,8 +311,7 @@ public:
                                 {
                                     std::cout << temp1[i] << "  ";
                                 }
-                                std::cout << std::endl
-                                          << p[i].getName() << "please choose a card to peak up: ";
+                                std::cout << std::endl << p[i].getName() << "please choose a card to peak up: ";
                                 std::cin >> chosenCard;
                                 if (chosenCard == "yellow1")
                                 {
@@ -286,11 +344,6 @@ public:
                                 p[i].setCardsInHand(chosenCard);
                                 p[i].popBackCardsYellowCardsOnTable(chosenCard);
                             }
-                            else
-                            {
-                                p[i].setPurpleCardsOnTable(choice);
-                                p[i].popBackCardsInhand(choice);
-                            }
                         }
                     }
                 }
@@ -298,9 +351,10 @@ public:
         }
     }
 
+//this function should calculate the scores of the players
     void calculatePlayersScore(std::vector<Player> &p)
     {
-        int biggestYellowCard = 0; // Initialize to a small value
+        int biggestYellowCard = 0; 
         Player *playerWithBiggestYellowCard = nullptr;
 
         // Calculate the base scores and find the biggest yellow card
@@ -323,32 +377,32 @@ public:
             // goodluck and badluck numbers added to all seasons
             if (season == 0)
             {
-                //weak winter added
+                // weak winter added
                 int sum = 0;
-                for(const auto &card : p[i].getYellowCardsOnTable())
+                for (const auto &card : p[i].getYellowCardsOnTable())
                 {
-                    //yellow1 nemikhad chon bar 2 taghsim she kafesh mishe 0
-                    if(card == "yellow2")
+                    // yellow1 nemikhad chon bar 2 taghsim she kafesh mishe 0
+                    if (card == "yellow2")
                     {
                         sum += 1;
                     }
-                    else if(card == "yellow3")
+                    else if (card == "yellow3")
                     {
                         sum += 1;
                     }
-                    else if(card == "yellow4")
+                    else if (card == "yellow4")
                     {
                         sum += 2;
                     }
-                    else if(card == "yellow5")
+                    else if (card == "yellow5")
                     {
                         sum += 2;
                     }
-                    else if(card == "yellow6")
+                    else if (card == "yellow6")
                     {
                         sum += 3;
                     }
-                    else if(card == "yellow10")
+                    else if (card == "yellow10")
                     {
                         sum += 5;
                     }
@@ -364,7 +418,7 @@ public:
                     p[i].setTotalScore(p[i].getTotalScore() * -1);
                 }
             }
-            else if (season == 1)
+            else if (season == 1) // spring
             {
                 p[i].setTotalScore(p[i].getYellowScore() * tablzan);
                 for (const auto &playerName : playersNameForSpring)
@@ -427,6 +481,7 @@ public:
         }
     }
 
+//set the winner of the round
     std::string checkWinnerOfTheRound(std::vector<Player> &players, std::string &neshanJang)
     {
         if (players.empty())
@@ -448,6 +503,7 @@ public:
         return temp->getName();
     }
 
+//this is for shirzan 
     void setProvinceChoice(std::vector<Player> &players)
     {
         Player *playerWithHighestNeshaneSolh = nullptr;
@@ -473,7 +529,7 @@ public:
 
     void setPlayersNameForSpring(std::vector<Player> &p)
     {
-        //beautiful spring for shahdokht added
+        // beautiful spring for shahdokht added
         bool itIs = false;
         int counter;
         for (int i{}; i < p.size(); i++)
@@ -515,21 +571,21 @@ public:
             }
         }
 
-        if(itIs == true)
+        if (itIs == true)
         {
-            for(int i{} ; i < p.size() ; i++)
+            for (int i{}; i < p.size(); i++)
             {
-                if(p[i].getBiggestYellowCard() == 10)
+                if (p[i].getBiggestYellowCard() == 10)
                 {
                     bool YorN = true;
                     for (const auto &player : playersNameForSpring)
                     {
-                        if(p[i].getName() == player)
+                        if (p[i].getName() == player)
                         {
                             YorN = false;
                         }
                     }
-                    if(YorN)
+                    if (YorN)
                     {
                         playersNameForSpring.push_back(p[i].getName());
                     }
@@ -538,6 +594,7 @@ public:
         }
     }
 
+//after each round we should check the game ends or not
     bool checkTheGameEndsOrNot(vector<Player> &players, CityMap &map)
     {
         for (int i = 0; i < players.size(); ++i)
@@ -633,7 +690,7 @@ public:
         return false;
     }
 
-    //setter func for goodluck and badluck numbers
+    // setter func for goodluck and badluck numbers
     void setGoodLuckNum(int n)
     {
         goodLuckNum = n;
@@ -643,7 +700,7 @@ public:
         badLuckNum = n;
     }
 
-    std::string& getProvinceChoice() 
+    std::string &getProvinceChoice()
     {
         return chosenProvince;
     }
@@ -651,9 +708,9 @@ public:
 private:
     std::vector<std::string> playersNameForSpring;
     int season = 2;
-    std::string neshanJang;
     int round = 1;
     int goodLuckNum;
     int badLuckNum;
     std::string chosenProvince;
+    int playerIndexWithMaxSHirzan = 0;
 };
