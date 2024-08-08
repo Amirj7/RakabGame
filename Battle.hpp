@@ -8,23 +8,23 @@
 class Battle
 {
 public:
-//this function should clear the screen for display function
-    void clearScreen() 
+    // this function should clear the screen for display function
+    void clearScreen()
     {
-        #if defined(_WIN32) || defined(_WIN64)
+#if defined(_WIN32) || defined(_WIN64)
         system("cls");
-        #else
+#else
         system("clear");
-        #endif
+#endif
     }
 
-//this function should display each player informations at the top of the terminal
-    void display(std::vector<Player> &p) 
+    // this function should display each player informations at the top of the terminal
+    void display(std::vector<Player> &p)
     {
         clearScreen(); // Clear the screen before displaying
         // Display Yellow Cards
         std::cout << "Yellow Cards:" << std::endl;
-        for (int i{}; i < p.size(); i++) 
+        for (int i{}; i < p.size(); i++)
         {
             std::cout << p[i].getName() << "'s cards : ";
             std::vector<std::string> temp1 = p[i].getYellowCardsOnTable();
@@ -34,7 +34,8 @@ public:
             }
             std::cout << std::endl;
         }
-        std::cout << std::endl << "-----------------------------------------------------------------------------------------" << std::endl;
+        std::cout << std::endl
+                  << "-----------------------------------------------------------------------------------------" << std::endl;
 
         // Display Purple Cards
         std::cout << "Purple Cards:" << std::endl;
@@ -48,11 +49,12 @@ public:
             }
             std::cout << std::endl;
         }
-        std::cout << std::endl << "-----------------------------------------------------------------------------------------" << std::endl;
+        std::cout << std::endl
+                  << "-----------------------------------------------------------------------------------------" << std::endl;
 
-        for (int i{}; i < p.size(); i++) //fix this
+        for (int i{}; i < p.size(); i++) // fix this
         {
-            //Display Captured Cities
+            // Display Captured Cities
             std::cout << p[i].getName() << "'s captured cities : ";
             std::vector<std::string> temp = p[i].getCapturedCities();
             for (int j{}; j < p[i].getCapturedCities().size(); j++)
@@ -61,10 +63,11 @@ public:
             }
             std::cout << std::endl;
         }
-        std::cout << std::endl << "-------------------------------------------------------------------------------------------" << std::endl;
+        std::cout << std::endl
+                  << "-------------------------------------------------------------------------------------------" << std::endl;
     }
 
-//this function check if the player pass or not
+    // this function check if the player pass or not
     bool checkPass(const std::vector<Player> &p)
     {
         int counter = 0;
@@ -78,7 +81,7 @@ public:
         return counter == p.size();
     }
 
-//this function checks the card is yellow or not
+    // this function checks the card is yellow or not
     bool isYellow(std::string c)
     {
         int isthere = c.find("yellow");
@@ -92,7 +95,7 @@ public:
         }
     }
 
-//this function starts the battle
+    // this function starts the battle
     void startBattle(std::vector<Player> &p)
     {
         while (checkPass(p) == false)
@@ -117,7 +120,7 @@ public:
                         std::cout << std::endl;
                         std::cin >> choice;
 
-                        if (std::find(temp.begin(), temp.end(), choice) != temp.end())//check if the choice is valid or not
+                        if (std::find(temp.begin(), temp.end(), choice) != temp.end()) // check if the choice is valid or not
                         {
                             validChoice = true;
                         }
@@ -130,12 +133,13 @@ public:
                             std::cout << "Invalid choice. Please choose a card from your hand or 'pass'." << std::endl;
                         }
                     }
-                    if (choice == "HELP") //help 
+                    while (choice == "HELP") // help
                     {
                         std::cout << "Hello my friend ! if you don't know how this game work don't worry I'm here!" << std::endl;
                         std::cout << "what's wrong ? pls choose your problem : cards / how to play " << std::endl;
                         string help;
-                        cin >> help;
+                        getline(cin, help);
+                        std::cout << std::endl;
                         if (help == "how to play")
                         {
                             std::cout << "The youngest player takes\n"
@@ -184,10 +188,37 @@ public:
                                          "placed. Randomly decide among the tied\n"
                                          "players who takes the battle marker.\n\n"
                                          "Note that the Spy special card can change\n"
-                                         "who takes the battle marker."
+                                         "who takes the battle marker.\n"
                                       << std::endl;
+                            char ch = getch();
+                            bool wrongWord = false;
+                            while (!wrongWord)
+                            {
+                                std::cout << p[i].getName() << " please play a card or pass( HELP for more info)" << std::endl;
+                                std::cout << "your cards: ";
+                                std::vector<std::string> temp = p[i].getCardsInHand();
+                                for (int j = 0; j < temp.size(); j++)
+                                {
+                                    std::cout << temp[j] << "  ";
+                                }
+                                std::cout << std::endl;
+                                std::cin >> choice;
+
+                                if (std::find(temp.begin(), temp.end(), choice) != temp.end()) // check if the choice is valid or not
+                                {
+                                    wrongWord = true;
+                                }
+                                else if (choice == "pass" || choice == "HELP")
+                                {
+                                    wrongWord = true;
+                                }
+                                else
+                                {
+                                    std::cout << "Invalid choice. Please choose a card from your hand or 'pass'." << std::endl;
+                                }
+                            }
                         }
-                        if (help == "cards")
+                        else if (help == "cards")
                         {
                             std::cout << "Drummer: When a Drummer card is played, the hand of the player who played it is doubled. Note that only yellow cards are doubled, and purple cards remain unchanged.\n\n"
                                          "Winter: When this card is played, all the scores obtained by players through yellow cards are converted to 1. For example, if you play 3 cards with different scores, you will have three scores of 1. The effect of Winter does not disappear until someone plays Spring and it remains until the end of that round.\n\n"
@@ -195,16 +226,43 @@ public:
                                          "Scarecrow: When you play a Scarecrow, you can pick up one of your cards from the ground. After this action, the Scarecrow card is discarded.\n\n"
                                          "Princess: This card has 10 points and is not affected by Winter, Spring, or any other special cards."
                                       << std::endl;
+                            char ch = getch();
+                            bool wrongWord = false;
+                            while (!wrongWord)
+                            {
+                                std::cout << p[i].getName() << " please play a card or pass( HELP for more info)" << std::endl;
+                                std::cout << "your cards: ";
+                                std::vector<std::string> temp = p[i].getCardsInHand();
+                                for (int j = 0; j < temp.size(); j++)
+                                {
+                                    std::cout << temp[j] << "  ";
+                                }
+                                std::cout << std::endl;
+                                std::cin >> choice;
+
+                                if (std::find(temp.begin(), temp.end(), choice) != temp.end()) // check if the choice is valid or not
+                                {
+                                    wrongWord = true;
+                                }
+                                else if (choice == "pass" || choice == "HELP")
+                                {
+                                    wrongWord = true;
+                                }
+                                else
+                                {
+                                    std::cout << "Invalid choice. Please choose a card from your hand or 'pass'." << std::endl;
+                                }
+                            }
                         }
                     }
 
-                    if (choice == "pass") //pass
+                    if (choice == "pass") // pass
                     {
                         p[i].setPass(true);
                     }
                     else
                     {
-                        if (isYellow(choice) == true)//yellow cards
+                        if (isYellow(choice) == true) // yellow cards
                         {
                             p[i].setYellowCardsOnTable(choice);
                             p[i].popBackCardsInhand(choice);
@@ -265,7 +323,7 @@ public:
                                 }
                             }
                         }
-                        else//purple cards
+                        else // purple cards
                         {
                             if (choice == "winter")
                             {
@@ -311,7 +369,8 @@ public:
                                 {
                                     std::cout << temp1[i] << "  ";
                                 }
-                                std::cout << std::endl << p[i].getName() << "please choose a card to peak up: ";
+                                std::cout << std::endl
+                                          << p[i].getName() << "please choose a card to peak up: ";
                                 std::cin >> chosenCard;
                                 if (chosenCard == "yellow1")
                                 {
@@ -351,10 +410,10 @@ public:
         }
     }
 
-//this function should calculate the scores of the players
+    // this function should calculate the scores of the players
     void calculatePlayersScore(std::vector<Player> &p)
     {
-        int biggestYellowCard = 0; 
+        int biggestYellowCard = 0;
         Player *playerWithBiggestYellowCard = nullptr;
 
         // Calculate the base scores and find the biggest yellow card
@@ -481,7 +540,7 @@ public:
         }
     }
 
-//set the winner of the round
+    // set the winner of the round
     std::string checkWinnerOfTheRound(std::vector<Player> &players, std::string &neshanJang)
     {
         if (players.empty())
@@ -503,7 +562,7 @@ public:
         return temp->getName();
     }
 
-//this is for shirzan 
+    // this is for shirzan
     void setProvinceChoice(std::vector<Player> &players)
     {
         Player *playerWithHighestNeshaneSolh = nullptr;
@@ -594,7 +653,7 @@ public:
         }
     }
 
-//after each round we should check the game ends or not
+    // after each round we should check the game ends or not
     bool checkTheGameEndsOrNot(vector<Player> &players, CityMap &map)
     {
         for (int i = 0; i < players.size(); ++i)
