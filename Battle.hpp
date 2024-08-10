@@ -511,7 +511,7 @@ public:
             }
 
             // Find the player with the biggest yellow card
-            if (p[i].getBiggestYellowCard() > biggestYellowCard)
+            if (p[i].getBiggestYellowCard() >= biggestYellowCard)
             {
                 biggestYellowCard = p[i].getBiggestYellowCard();
                 playerWithBiggestYellowCard = &p[i];
