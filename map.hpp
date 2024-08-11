@@ -11,11 +11,11 @@ public:
     CityMap()
     {
         nearbyCities["BELLA"] = {"CALINE", "PLADACI", "BORGE"};
-        nearbyCities["CALINE"] = {"BALLA", "BORGE", "LIA", "ATELA", "PLADACI"};
+        nearbyCities["CALINE"] = {"BELLA", "BORGE", "LIA", "ATELA", "PLADACI"};
         nearbyCities["LIA"] = {"CALINE", "ATELA", "BORGE", "DAMASE"};
         nearbyCities["ATELA"] = {"CALINE", "LIA", "DIMASE", "ATHENS"};
-        nearbyCities["PLADACI"] = {"BALLA", "CALINE", "BORGE", "MORINA", "ROLLO"};
-        nearbyCities["BORGE"] = {"BALLA", "CALINE", "LIA", "DIMASE", "PLADACI", "MORINA", "OLIVADI"};
+        nearbyCities["PLADACI"] = {"BELLA", "CALINE", "BORGE", "MORINA", "ROLLO"};
+        nearbyCities["BORGE"] = {"BELLA", "CALINE", "LIA", "DIMASE", "PLADACI", "MORINA", "OLIVADI"};
         nearbyCities["DIMASE"] = {"ATELA", "LIA", "BORGE", "OLIVADI", "ATHENS"};
         nearbyCities["MORINA"] = {"PLADACI", "BORGE", "OLIVADI", "ARMENTO", "TALMONE", "ROLLO"};
         nearbyCities["OLIVADI"] = {"DIMASE", "BORGE", "MORINA", "ARMENTO", "ENNA"};
