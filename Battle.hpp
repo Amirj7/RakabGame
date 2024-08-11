@@ -351,6 +351,11 @@ public:
                                 // std::cout << p[i].getPlayerPlayedRishsefidOrNot() << " here" << std::endl;
                                 p[i].setNeshaneSolh(1);
                             }
+                            else if (choice == "tablzan")
+                            {
+                                p[i].setPurpleCardsOnTable(choice);
+                                p[i].popBackCardsInhand(choice);
+                            }
                             else if (choice == "parchamdar")
                             {
                                 p[i].setPurpleCardsOnTable(choice);
@@ -419,7 +424,7 @@ public:
         // Calculate the base scores and find the biggest yellow card
         for (int i = 0; i < p.size(); i++)
         {
-            int tablzan = 1;
+            double tablzan = 1;
             std::vector<std::string> temp = p[i].getPurpleCardsOnTable();
             for (const auto &card : temp)
             {
